@@ -92,7 +92,7 @@ namespace OzTip.FixtureImporter
             request.TimeMin = new DateTime(2016, 1, 1, 0, 0, 0);
             request.ShowDeleted = false;
             request.SingleEvents = true;
-            request.MaxResults = 5;
+            request.MaxResults = 100;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
             // List events.
@@ -101,15 +101,18 @@ namespace OzTip.FixtureImporter
             Console.ReadLine();
 
             Console.WriteLine("Upcoming events:");
-
+            
             var teamRepo = new RepositoryBase<Team>();
             var teams = teamRepo.Get();
+
+            var roundRepo = new RepositoryBase<Round>();
+            var rounds = roundRepo.Get();
             
             if (events.Items != null && events.Items.Count > 0)
             {
                 var games = events.Items;
                 var newGames = new List<Game>();
-
+                
                 foreach (var game in games)
                 {
                     var teamCodeRegex = new Regex("([A-Z]{3})");
@@ -139,11 +142,15 @@ namespace OzTip.FixtureImporter
                         IsHome = false
                     };
 
+                    var gameRound = rounds.First(ro => ro.Start <= game.Start.DateTime.Value && ro.End >= game.Start.DateTime.Value);
+
                     var newGame = new Game
                     {
+                        RoundId = gameRound.Id,
+                        Round = gameRound,
                         Scores = new List<Score> { homeScore, awayScore },
-                        Start = game.Start.DateTime.Value,
-                        End = game.End.DateTime.Value
+                        Start = game.Start.DateTime.Value.ToLocalTime(),
+                        End = game.End.DateTime.Value.ToLocalTime()
                     };
 
                     newGames.Add(newGame);
@@ -159,6 +166,7 @@ namespace OzTip.FixtureImporter
                 }
 
                 Console.Write(newGames.ToStringTable(
+                    ga => ga.Round.Name,
                     ga => ga.Start,
                     ga => ga.End,
                     ga => ga.HomeTeam.ShortName,

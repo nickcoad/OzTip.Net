@@ -14,9 +14,10 @@ namespace OzTip.Models
         #endregion
 
         #region Metadata
+        public string Name { get; set; }
+        public int Number { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public string Name { get; set; }
         public string TelstraCode { get; set; }
         #endregion
 
