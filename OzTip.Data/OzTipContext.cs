@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OzTip.Models;
+using System.Diagnostics;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
+using OzTip.Core.Interfaces;
 
 namespace OzTip.Data
 {
-    public class OzTipContext : DbContext
+    public class OzTipContext : IdentityDbContext<User, Role, int, UserLogin, UserRole, UserClaim>
     {
         public OzTipContext() : base("OzTipDatabase")
         {
+            Database.Log = s => Debug.WriteLine(s);
         }
 
         public DbSet<Competition> Competitions { get; set; }
@@ -23,8 +25,12 @@ namespace OzTip.Data
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Tip> Tips { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Venue> Venues { get; set; }
+
+        public static OzTipContext Create()
+        {
+            return new OzTipContext();
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -43,13 +49,46 @@ namespace OzTip.Data
             modelBuilder.Entity<Score>()
                 .Ignore(sc => sc.Total);
 
+            modelBuilder.Entity<Team>()
+                .HasMany(te => te.Scores)
+                .WithRequired(sc => sc.Team);
+
             modelBuilder.Entity<Competition>()
                 .HasMany(co => co.Users)
                 .WithMany(us => us.Competitions);
 
             modelBuilder.Entity<Competition>()
                 .HasRequired(co => co.Owner)
-                .WithOptional();
+                .WithMany()
+                .HasForeignKey(co => co.UserId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+            modelBuilder.Entity<UserLogin>()
+                .HasKey(ur => new { ur.UserId, ur.ProviderKey });
+        }
+
+        public override int SaveChanges()
+        {
+            DateTime now = DateTime.UtcNow;
+            foreach (ObjectStateEntry entry in (this as IObjectContextAdapter).ObjectContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added | EntityState.Modified))
+            {
+                if (!entry.IsRelationship)
+                {
+                    var record = entry.Entity as IHasTimeStamps;
+
+                    if (record != null)
+                    {
+                        if (entry.State == EntityState.Added)
+                            record.Created = now;
+
+                        record.Updated = now;
+                    }
+                }
+            }
+
+            return base.SaveChanges();
         }
     }
 }

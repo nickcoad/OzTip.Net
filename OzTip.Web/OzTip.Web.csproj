@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -162,18 +163,38 @@
     <Compile Include="Areas\Dev\Controllers\SeasonsController.cs" />
     <Compile Include="Areas\Dev\DevAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CompetitionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OzTipControllerBase.cs" />
+    <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Competitions\CreateCompetitionViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seeders\DefaultInitializer.cs" />
+    <Compile Include="Seeders\GameSeeder.cs" />
+    <Compile Include="Seeders\RoundSeeder.cs" />
+    <Compile Include="Seeders\SeasonSeeder.cs" />
+    <Compile Include="Seeders\TeamSeeder.cs" />
+    <Compile Include="Seeders\UserSeeder.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AssetsSrc\style.css">
+      <DependentUpon>style.less</DependentUpon>
+    </Content>
+    <Content Include="AssetsSrc\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\style.css" />
+    <Content Include="Assets\css\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -195,6 +216,88 @@
     <Content Include="Areas\Dev\Views\Seasons\Details.cshtml" />
     <Content Include="Areas\Dev\Views\Seasons\Edit.cshtml" />
     <Content Include="Areas\Dev\Views\Seasons\Index.cshtml" />
+    <Content Include="AssetsSrc\style.less" />
+    <Content Include="AssetsSrc\bootstrap\.csscomb.json" />
+    <Content Include="AssetsSrc\bootstrap\.csslintrc" />
+    <Content Include="AssetsSrc\bootstrap\alerts.less" />
+    <Content Include="AssetsSrc\bootstrap\badges.less" />
+    <Content Include="AssetsSrc\bootstrap\bootstrap.less" />
+    <Content Include="AssetsSrc\bootstrap\breadcrumbs.less" />
+    <Content Include="AssetsSrc\bootstrap\button-groups.less" />
+    <Content Include="AssetsSrc\bootstrap\buttons.less" />
+    <Content Include="AssetsSrc\bootstrap\carousel.less" />
+    <Content Include="AssetsSrc\bootstrap\close.less" />
+    <Content Include="AssetsSrc\bootstrap\code.less" />
+    <Content Include="AssetsSrc\bootstrap\component-animations.less" />
+    <Content Include="AssetsSrc\bootstrap\dropdowns.less" />
+    <Content Include="AssetsSrc\bootstrap\forms.less" />
+    <Content Include="AssetsSrc\bootstrap\glyphicons.less" />
+    <Content Include="AssetsSrc\bootstrap\grid.less" />
+    <Content Include="AssetsSrc\bootstrap\input-groups.less" />
+    <Content Include="AssetsSrc\bootstrap\jumbotron.less" />
+    <Content Include="AssetsSrc\bootstrap\labels.less" />
+    <Content Include="AssetsSrc\bootstrap\list-group.less" />
+    <Content Include="AssetsSrc\bootstrap\media.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\alerts.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\background-variant.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\border-radius.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\buttons.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\center-block.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\clearfix.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\forms.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\gradients.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\grid-framework.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\grid.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\hide-text.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\image.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\labels.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\list-group.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\nav-divider.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\opacity.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\pagination.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\panels.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\progress-bar.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\reset-filter.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\reset-text.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\resize.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\size.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\tab-focus.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\table-row.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\text-emphasis.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\text-overflow.less" />
+    <Content Include="AssetsSrc\bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="AssetsSrc\bootstrap\modals.less" />
+    <Content Include="AssetsSrc\bootstrap\navbar.less" />
+    <Content Include="AssetsSrc\bootstrap\navs.less" />
+    <Content Include="AssetsSrc\bootstrap\normalize.less" />
+    <Content Include="AssetsSrc\bootstrap\pager.less" />
+    <Content Include="AssetsSrc\bootstrap\pagination.less" />
+    <Content Include="AssetsSrc\bootstrap\panels.less" />
+    <Content Include="AssetsSrc\bootstrap\popovers.less" />
+    <Content Include="AssetsSrc\bootstrap\print.less" />
+    <Content Include="AssetsSrc\bootstrap\progress-bars.less" />
+    <Content Include="AssetsSrc\bootstrap\responsive-embed.less" />
+    <Content Include="AssetsSrc\bootstrap\responsive-utilities.less" />
+    <Content Include="AssetsSrc\bootstrap\scaffolding.less" />
+    <Content Include="AssetsSrc\bootstrap\tables.less" />
+    <Content Include="AssetsSrc\bootstrap\theme.less" />
+    <Content Include="AssetsSrc\bootstrap\thumbnails.less" />
+    <Content Include="AssetsSrc\bootstrap\tooltip.less" />
+    <Content Include="AssetsSrc\bootstrap\type.less" />
+    <Content Include="AssetsSrc\bootstrap\utilities.less" />
+    <Content Include="AssetsSrc\bootstrap\variables.less" />
+    <Content Include="AssetsSrc\bootstrap\wells.less" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -242,10 +345,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\success.cshtml" />
+    <Content Include="Views\Competitions\index.cshtml" />
+    <Content Include="Views\Competitions\details.cshtml" />
+    <Content Include="Views\Competitions\create.cshtml" />
+    <Content Include="Views\Teams\details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dev\Models\" />
+    <Folder Include="Views\OzTipControllerBase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

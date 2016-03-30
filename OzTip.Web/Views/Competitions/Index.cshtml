@@ -1,0 +1,49 @@
+﻿@model List<OzTip.Models.Competition>
+
+@{ 
+
+    ViewBag.Title = "Your competitions";
+
+}
+
+@if (Model.Any())
+{
+    <h1>Your competitions</h1>
+    <hr />
+    @Html.ActionLink("Start a competition", "create", "competitions", new { @class = "btn btn-default" })
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Owner</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Private?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comp in Model)
+            {
+                <tr>
+                    <td>@comp.Name</td>
+                    <td>@comp.Owner.UserName</td>
+                    <td>@comp.Created</td>
+                    <td>@comp.Updated</td>
+                    <td><span class="@(comp.IsPublic ? "" : "glyphicon glyphicon-lock")"></span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="jumbotron">
+        <h1>No competitions</h1>
+        <p>
+            You are not currently playing in any competitions. Would you like to
+            @Html.ActionLink("start one", "create", "competitions") or browse for
+            a public competition to join?
+        </p>
+    </div>
+}

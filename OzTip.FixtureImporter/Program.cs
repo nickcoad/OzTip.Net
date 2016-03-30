@@ -14,7 +14,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 using OzTip.Data;
-using OzTip.Data.Seeders;
 using OzTip.Models;
 using TableParser;
 
@@ -29,7 +28,7 @@ namespace OzTip.FixtureImporter
 
         static void Main()
         {
-            Database.SetInitializer(new DefaultInitializer());
+            //Database.SetInitializer(new DefaultInitializer());
 
             UserCredential credential;
 

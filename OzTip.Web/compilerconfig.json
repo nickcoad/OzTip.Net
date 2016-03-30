@@ -1,0 +1,9 @@
+﻿[
+  {
+    "outputFile": "Assets/css/style.css",
+    "inputFile": "AssetsSrc/style.less",
+    "options": {
+      "relativeUrls": true
+    }
+  }
+]

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzTip.Models", "OzTip.Models\OzTip.Models.csproj", "{BC9615A0-1D3F-4490-841D-163EFF24E9DA}"
 EndProject
@@ -16,6 +16,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzTip.Core", "OzTip.Core\OzTip.Core.csproj", "{C1A8895B-33D5-45B7-885E-C45841250E45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzTip.FixtureImporter", "OzTip.FixtureImporter\OzTip.FixtureImporter.csproj", "{B9AE29E0-1AB3-4190-96B5-FF1FFAFB7CD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1BFA2ADE-72C8-4BD5-B894-4703DE8D1A8A}"
+	ProjectSection(SolutionItems) = preProject
+		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

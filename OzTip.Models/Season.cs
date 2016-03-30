@@ -18,12 +18,7 @@ namespace OzTip.Models
         public string Name { get; set; }
         public string TelstraCode { get; set; }
         #endregion
-
-        #region Auditing
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
-        #endregion
-
+        
         #region Relationships
         public virtual ICollection<Round> Rounds { get; set; }
         #endregion

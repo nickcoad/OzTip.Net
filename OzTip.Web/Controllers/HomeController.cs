@@ -6,20 +6,15 @@ using System.Web.Mvc;
 
 namespace OzTip.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : OzTipControllerBase
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
+        [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

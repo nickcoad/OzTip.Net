@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OzTip.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Xml.Schema;
 
 namespace OzTip.Models
 {
-    public class Game
+    public class Game : IHasTimeStamps
     {
         #region Keys
         public int Id { get; set; }

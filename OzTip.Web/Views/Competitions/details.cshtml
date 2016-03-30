@@ -1,0 +1,54 @@
+﻿@model OzTip.Models.Competition
+
+    <h1>Your competitions</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Owner</th>
+                <th>Created</th>
+                <th>Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Name</td>
+                <td>@Model.Owner.GivenName @Model.Owner.Surname</td>
+                <td>@Model.Created</td>
+                <td>@Model.Updated</td>
+            </tr>
+        </tbody>
+    </table>
+
+@if (Model.Users.Any())
+{
+    <h2>Players</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Actual Name</th>
+                <th>Created</th>
+                <th>Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.GivenName @user.Surname</td>
+                    <td>@user.Created</td>
+                    <td>@user.Updated</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="jumbotron">
+        <h1>No players</h1>
+        <p>There are no players in this competition.</p>
+    </div>
+}

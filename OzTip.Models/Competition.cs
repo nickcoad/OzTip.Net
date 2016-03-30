@@ -1,9 +1,10 @@
-﻿using System;
+﻿using OzTip.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace OzTip.Models
 {
-    public class Competition
+    public class Competition : IHasTimeStamps
     {
         #region Keys
         public int Id { get; set; }
@@ -13,6 +14,7 @@ namespace OzTip.Models
 
         #region Metadata
         public string Name { get; set; }
+        public string Description { get; set; }
         public bool IsPublic { get; set; }
         #endregion
 

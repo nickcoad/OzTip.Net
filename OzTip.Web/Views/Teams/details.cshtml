@@ -1,0 +1,62 @@
+﻿@model OzTip.Models.Team
+
+@{ 
+    ViewBag.Title = "Team details";
+}
+
+<h1>Team details</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Long Name</th>
+            <th>Created</th>
+            <th>Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Code</td>
+            <td>@Model.ShortName</td>
+            <td>@Model.LongName</td>
+            <td>@Model.Created</td>
+            <td>@Model.Updated</td>
+        </tr>
+    </tbody>
+</table>
+
+@if (Model.Scores.Any())
+{
+    <h2>Games</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date/time</th>
+                <th>Opponent</th>
+                <th>Venue</th>
+                <th>Created</th>
+                <th>Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var score in Model.Scores)
+            {
+                <tr>
+                    <td>@score.Game.Start</td>
+                    <td>@(score.IsHome ? score.Game.AwayTeam.ShortName : score.Game.HomeTeam.ShortName)</td>
+                    <td>@score.Game.Venue.LongName</td>
+                    <td>@score.Created</td>
+                    <td>@score.Updated</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="jumbotron">
+        <h1>No games</h1>
+        <p>There are no games for this team.</p>
+    </div>
+}

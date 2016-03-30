@@ -21,11 +21,6 @@ namespace OzTip.Models
         public string TelstraCode { get; set; }
         #endregion
 
-        #region Auditing
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
-        #endregion
-
         #region Relationships
         public virtual Season Season { get; set; }
         public virtual ICollection<Game> Games { get; set; }

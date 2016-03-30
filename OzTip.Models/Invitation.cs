@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OzTip.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OzTip.Models
 {
-    public class Invitation
+    public class Invitation : IHasTimeStamps
     {
         #region Keys
         public int Id { get; set; }
