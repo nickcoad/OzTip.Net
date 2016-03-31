@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
 using System.Web.Mvc;
 using OzTip.Core.Interfaces;
 using OzTip.Data;
 using OzTip.Models;
 
-namespace OzTip.Web.Areas.Dev.Controllers
+namespace OzTip.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CompetitionsController : Controller
     {
         private readonly IRepository<Competition> _competitionRepository;
@@ -35,14 +30,14 @@ namespace OzTip.Web.Areas.Dev.Controllers
             _seasonRepository = seasonRepository;
         }
 
-        // GET: Dev/Competitions
+        // GET: admin/competitions
         public ActionResult Index()
         {
             var competitions = _competitionRepository.Include(c => c.Season).Include(c => c.Owner).Get();
             return View(competitions);
         }
 
-        // GET: Dev/Competitions/Details/5
+        // GET: admin/competitions/details/{id}
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -59,7 +54,7 @@ namespace OzTip.Web.Areas.Dev.Controllers
             return View(competition);
         }
 
-        // GET: Dev/Competitions/Create
+        // GET: admin/competitions/create
         public ActionResult Create()
         {
             ViewBag.SeasonId = new SelectList(_seasonRepository.Get(), "Id", "Name");
@@ -67,7 +62,7 @@ namespace OzTip.Web.Areas.Dev.Controllers
             return View();
         }
 
-        // POST: Dev/Competitions/Create
+        // POST: admin/competitions/create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -86,7 +81,7 @@ namespace OzTip.Web.Areas.Dev.Controllers
             return View(competition);
         }
 
-        // GET: Dev/Competitions/Edit/5
+        // GET: admin/competitions/edit/{id}
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -103,7 +98,7 @@ namespace OzTip.Web.Areas.Dev.Controllers
             return View(competition);
         }
 
-        // POST: Dev/Competitions/Edit/5
+        // POST: admin/competitions/edit/{id}
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -121,7 +116,7 @@ namespace OzTip.Web.Areas.Dev.Controllers
             return View(competition);
         }
 
-        // GET: Dev/Competitions/Delete/5
+        // GET: admin/competitions/delete/{id}
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -136,7 +131,7 @@ namespace OzTip.Web.Areas.Dev.Controllers
             return View(competition);
         }
 
-        // POST: Dev/Competitions/Delete/5
+        // POST: admin/competitions/delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

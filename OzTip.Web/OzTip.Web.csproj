@@ -159,9 +159,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Dev\Controllers\CompetitionsController.cs" />
-    <Compile Include="Areas\Dev\Controllers\SeasonsController.cs" />
-    <Compile Include="Areas\Dev\DevAreaRegistration.cs" />
+    <Compile Include="Areas\admin\Controllers\CompetitionsController.cs" />
+    <Compile Include="Areas\admin\Controllers\SeasonsController.cs" />
+    <Compile Include="Areas\admin\AdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompetitionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -203,19 +203,19 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\Dev\Views\web.config" />
-    <Content Include="Areas\Dev\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Dev\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Dev\Views\Competitions\Create.cshtml" />
-    <Content Include="Areas\Dev\Views\Competitions\Delete.cshtml" />
-    <Content Include="Areas\Dev\Views\Competitions\Details.cshtml" />
-    <Content Include="Areas\Dev\Views\Competitions\Edit.cshtml" />
-    <Content Include="Areas\Dev\Views\Competitions\Index.cshtml" />
-    <Content Include="Areas\Dev\Views\Seasons\Create.cshtml" />
-    <Content Include="Areas\Dev\Views\Seasons\Delete.cshtml" />
-    <Content Include="Areas\Dev\Views\Seasons\Details.cshtml" />
-    <Content Include="Areas\Dev\Views\Seasons\Edit.cshtml" />
-    <Content Include="Areas\Dev\Views\Seasons\Index.cshtml" />
+    <Content Include="Areas\admin\Views\web.config" />
+    <Content Include="Areas\admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\admin\Views\Competitions\Create.cshtml" />
+    <Content Include="Areas\admin\Views\Competitions\Delete.cshtml" />
+    <Content Include="Areas\admin\Views\Competitions\Details.cshtml" />
+    <Content Include="Areas\admin\Views\Competitions\Edit.cshtml" />
+    <Content Include="Areas\admin\Views\Competitions\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Seasons\Create.cshtml" />
+    <Content Include="Areas\admin\Views\Seasons\Delete.cshtml" />
+    <Content Include="Areas\admin\Views\Seasons\Details.cshtml" />
+    <Content Include="Areas\admin\Views\Seasons\Edit.cshtml" />
+    <Content Include="Areas\admin\Views\Seasons\Index.cshtml" />
     <Content Include="AssetsSrc\style.less" />
     <Content Include="AssetsSrc\bootstrap\.csscomb.json" />
     <Content Include="AssetsSrc\bootstrap\.csslintrc" />
@@ -353,7 +353,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Dev\Models\" />
+    <Folder Include="Areas\admin\Models\" />
     <Folder Include="Views\OzTipControllerBase\" />
   </ItemGroup>
   <ItemGroup>

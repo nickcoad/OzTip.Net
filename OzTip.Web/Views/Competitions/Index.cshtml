@@ -26,7 +26,7 @@
             @foreach (var comp in Model)
             {
                 <tr>
-                    <td>@comp.Name</td>
+                    <td>@Html.ActionLink(comp.Name, "details", "competitions", new { id = comp.Id }, null)</td>
                     <td>@comp.Owner.UserName</td>
                     <td>@comp.Created</td>
                     <td>@comp.Updated</td>

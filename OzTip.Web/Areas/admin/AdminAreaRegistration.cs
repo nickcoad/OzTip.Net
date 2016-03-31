@@ -1,23 +1,23 @@
 ﻿using System.Web.Mvc;
 
-namespace OzTip.Web.Areas.Dev
+namespace OzTip.Web.Areas.Admin
 {
-    public class DevAreaRegistration : AreaRegistration 
+    public class AdminAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "Dev";
+                return "admin";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Dev_default",
-                "Dev/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                "admin_default",
+                "admin/{controller}/{action}/{id}",
+                new { action = "index", id = UrlParameter.Optional }
             );
         }
     }
