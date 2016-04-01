@@ -12,6 +12,9 @@ namespace OzTip.FixtureImporter.Seeders
 
             RoundSeeder.Seed(context);
             context.SaveChanges();
+            
+            VenueSeeder.Seed(context);
+            context.SaveChanges();
 
             TeamSeeder.Seed(context);
             context.SaveChanges();

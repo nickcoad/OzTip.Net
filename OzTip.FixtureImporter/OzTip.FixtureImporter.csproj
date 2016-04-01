@@ -106,7 +106,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeders\DefaultInitializer.cs" />
-    <Compile Include="Seeders\GameSeeder.cs" />
+    <Compile Include="Seeders\VenueSeeder.cs" />
     <Compile Include="Seeders\RoundSeeder.cs" />
     <Compile Include="Seeders\SeasonSeeder.cs" />
     <Compile Include="Seeders\TeamSeeder.cs" />

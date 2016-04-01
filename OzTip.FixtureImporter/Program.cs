@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
+using OzTip.Core.Interfaces;
 using OzTip.Data;
 using OzTip.FixtureImporter.Seeders;
 using OzTip.Models;
@@ -30,6 +31,8 @@ namespace OzTip.FixtureImporter
         static void Main()
         {
             Database.SetInitializer(new DefaultInitializer());
+
+            var context = new OzTipContext();
 
             UserCredential credential;
 
@@ -92,7 +95,7 @@ namespace OzTip.FixtureImporter
             request.TimeMin = new DateTime(2016, 1, 1, 0, 0, 0);
             request.ShowDeleted = false;
             request.SingleEvents = true;
-            request.MaxResults = 100;
+            request.MaxResults = 1;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
             // List events.
@@ -101,11 +104,11 @@ namespace OzTip.FixtureImporter
             Console.ReadLine();
 
             Console.WriteLine("Upcoming events:");
-            
-            var teamRepo = new RepositoryBase<Team>();
+
+            var teamRepo = new RepositoryBase<Team>(context);
             var teams = teamRepo.Get();
 
-            var roundRepo = new RepositoryBase<Round>();
+            var roundRepo = new RepositoryBase<Round>(context);
             var rounds = roundRepo.Get();
             
             if (events.Items != null && events.Items.Count > 0)
@@ -128,32 +131,16 @@ namespace OzTip.FixtureImporter
                     var homeTeam = teams.Single(te => te.Code == team1Code);
                     var awayTeam = teams.Single(te => te.Code == team2Code);
 
-                    var homeScore = new Score
-                    {
-                        TeamId = homeTeam.Id,
-                        Team = homeTeam,
-                        IsHome = true
-                    };
-
-                    var awayScore = new Score
-                    {
-                        TeamId = awayTeam.Id,
-                        Team = awayTeam,
-                        IsHome = false
-                    };
-
                     var gameRound = rounds.First(ro => ro.Start <= game.Start.DateTime.Value && ro.End >= game.Start.DateTime.Value);
 
                     var newGame = new Game
                     {
                         RoundId = gameRound.Id,
                         Round = gameRound,
-                        Scores = new List<Score> { homeScore, awayScore },
                         Start = game.Start.DateTime.Value.ToLocalTime(),
-                        End = game.End.DateTime.Value.ToLocalTime()
+                        End = game.End.DateTime.Value.ToLocalTime(),
+                        VenueId = 1
                     };
-
-                    newGames.Add(newGame);
                     
                     Console.WriteLine(game.Start.DateTime);
                     //Console.WriteLine("{0}\t\t{1}\t\t{2}\t\t{3}",
@@ -163,14 +150,42 @@ namespace OzTip.FixtureImporter
                     //    awayTeam.ShortName);
 
                     //Console.WriteLine("{0} ({1}) {2}", gameSummary, when, game.Start.TimeZone);
+
+                    var gamesRepo = new RepositoryBase<Game>(context);
+                    gamesRepo.Create(newGame);
+
+                    var homeScore = new Score
+                    {
+                        GameId = newGame.Id,
+                        TeamId = homeTeam.Id,
+                        IsHome = true
+                    };
+
+                    var awayScore = new Score
+                    {
+                        GameId = newGame.Id,
+                        TeamId = awayTeam.Id,
+                        IsHome = false
+                    };
+
+                    var scoresRepo = new RepositoryBase<Score>(context);
+
+                    scoresRepo.Create(homeScore);
+                    scoresRepo.Create(awayScore);
+
+                    newGames.Add(gamesRepo.GetById(newGame.Id));
                 }
 
+                var venueRepo = new RepositoryBase<Venue>(context);
+                var venues = venueRepo.Get();
+                
                 Console.Write(newGames.ToStringTable(
                     ga => ga.Round.Name,
                     ga => ga.Start,
                     ga => ga.End,
                     ga => ga.HomeTeam.ShortName,
-                    ga => ga.AwayTeam.ShortName
+                    ga => ga.AwayTeam.ShortName,
+                    ga => ga.Venue.Name
                 ));
             }
             else

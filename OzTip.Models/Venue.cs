@@ -10,8 +10,7 @@ namespace OzTip.Models
 
         #region Metadata
         public string Stub { get; set; }
-        public string ShortName { get; set; }
-        public string LongName { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
@@ -22,6 +21,7 @@ namespace OzTip.Models
 
         #region Relationships
         public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
         #endregion
     }
 }

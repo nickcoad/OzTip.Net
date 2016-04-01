@@ -37,14 +37,17 @@ namespace OzTip.Data
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            
+
             modelBuilder.Entity<Game>()
-                .Ignore(ga => ga.HomeTeamId)
-                .Ignore(ga => ga.AwayTeamId)
                 .Ignore(ga => ga.HomeTeam)
                 .Ignore(ga => ga.AwayTeam)
                 .Ignore(ga => ga.HomeScore)
                 .Ignore(ga => ga.AwayScore);
+
+            modelBuilder.Entity<Game>()
+                .HasRequired(ga => ga.Venue)
+                .WithMany()
+                .HasForeignKey(ga => ga.VenueId);
 
             modelBuilder.Entity<Score>()
                 .Ignore(sc => sc.Total);

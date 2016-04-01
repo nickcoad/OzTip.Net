@@ -23,6 +23,12 @@ namespace OzTip.Data
             _set = _context.Set<TEntity>();
         }
 
+        public RepositoryBase(OzTipContext context)
+        {
+            _context = context;
+            _set = _context.Set<TEntity>();
+        }
+
         public IRepository<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             foreach (var includeProperty in includeProperties)
