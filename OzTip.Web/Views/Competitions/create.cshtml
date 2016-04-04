@@ -4,39 +4,77 @@
     ViewBag.Title = "Start a competition";
 }
 
-<div class="row">
-    <div class="col-xs-12">
-        <h1>@ViewBag.Title</h1>
-    </div>
-</div>
+@section breadcrumbs
+{
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("index", "home")">Home</a>
+        </li>
+        <li>
+            <a href="@Url.Action("index", "competitions")">Competitions</a>
+        </li>
+        <li class="active">
+            <strong>Start a competition</strong>
+        </li>
+    </ol>
+}
 
-<hr />
 
 @using (Html.BeginForm("create", "competitions", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <div class="checkbox">
-                @Html.CheckBoxFor(m => m.IsPublic)
-                @Html.LabelFor(m => m.IsPublic)
+    <div class="col-lg-4 col-lg-offset-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Start a competition</h5>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal">
+                    <p>Enter the details for your competition.</p>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name, new { @class = "control-label col-lg-2" })
+                        <div class="col-lg-10">
+                            @Html.TextBoxFor(m => m.Name, new {@class = "form-control", placeholder = "My cool competition for cool people"})
+                            @Html.ValidationMessageFor(m => m.Name, null, new {@class = "error text-danger"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Description</label>
+                        <div class="col-lg-10">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button class="btn btn-sm btn-white" type="submit">Start a competition</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Start competition</button>
-        </div>
-    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $.validator.setDefaults({
+            highlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).addClass(errorClass).removeClass(validClass);
+                } else {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                    $(element).removeClass('success').addClass('error');
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).removeClass(errorClass).addClass(validClass);
+                } else {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                    $(element).removeClass('error').addClass('success');
+                }
+            }
+        });
+    </script>
 }

@@ -52,7 +52,7 @@ namespace OzTip.Data
         public TEntity Create(TEntity entityToSave)
         {
             _set.Add(entityToSave);
-            _context.SaveChanges();
+            SaveChanges();
 
             return entityToSave;
         }
@@ -60,7 +60,7 @@ namespace OzTip.Data
         public TEntity Update(TEntity entityToSave)
         {
             _context.Entry(entityToSave).State = EntityState.Modified;
-            _context.SaveChanges();
+            SaveChanges();
 
             return entityToSave;
         }
@@ -75,6 +75,11 @@ namespace OzTip.Data
             var toDelete = _context.Set<TEntity>().Find(id);
             _set.Remove(toDelete);
 
+            SaveChanges();
+        }
+
+        public void SaveChanges()
+        {
             _context.SaveChanges();
         }
 

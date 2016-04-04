@@ -1,49 +1,69 @@
 ﻿@model List<OzTip.Models.Competition>
 
-@{ 
+@{
 
-    ViewBag.Title = "Your competitions";
+    ViewBag.Title = "Competitions";
 
 }
 
-@if (Model.Any())
+@section breadcrumbs
 {
-    <h1>Your competitions</h1>
-    <hr />
-    @Html.ActionLink("Start a competition", "create", "competitions", new { @class = "btn btn-default" })
-    <hr />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Owner</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>Private?</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var comp in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(comp.Name, "details", "competitions", new { id = comp.Id }, null)</td>
-                    <td>@comp.Owner.UserName</td>
-                    <td>@comp.Created</td>
-                    <td>@comp.Updated</td>
-                    <td><span class="@(comp.IsPublic ? "" : "glyphicon glyphicon-lock")"></span></td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("index", "home")">Home</a>
+        </li>
+        <li class="active">
+            <strong>Competitions</strong>
+        </li>
+    </ol>
 }
-else
-{
-    <div class="jumbotron">
-        <h1>No competitions</h1>
-        <p>
-            You are not currently playing in any competitions. Would you like to
-            @Html.ActionLink("start one", "create", "competitions") or browse for
-            a public competition to join?
-        </p>
+
+<div class="ibox">
+    <div class="ibox-title">
+        <h5>Your competitions</h5>
     </div>
-}
+    <div class="ibox-content">
+
+        @if (Model.Any())
+        {
+            <a href="@Url.Action("create", "competitions")" class="btn btn-default"><span class="fa fa-plus-circle"></span> Start a competition</a>
+            <hr />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Owner</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>Private?</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var comp in Model)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(comp.Name, "details", "competitions", new { id = comp.Id }, null)</td>
+                            <td>@comp.Owner.UserName</td>
+                            <td>@comp.Created</td>
+                            <td>@comp.Updated</td>
+                            <td><span class="@(comp.IsPublic ? "" : "glyphicon glyphicon-lock")"></span></td>
+                            <td><a href="@Url.Action("delete", "competitions", new {id = comp.Id})" class="btn btn-danger btn-xs"><span class="fa fa-remove"></span> Delete</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <a href="@Url.Action("create", "competitions")" class="btn btn-default"><span class="fa fa-plus-circle"></span> Start a competition</a>
+        }
+        else
+        {
+            <h1>No competitions</h1>
+            <p>
+                You are not currently playing in any competitions. Would you like to
+                @Html.ActionLink("start one", "create", "competitions") or browse for
+                a public competition to join?
+            </p>
+        }
+    </div>
+</div>

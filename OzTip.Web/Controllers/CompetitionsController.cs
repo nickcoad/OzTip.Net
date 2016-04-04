@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OzTip.Web.Models;
 
 namespace OzTip.Web.Controllers
 {
@@ -27,6 +28,9 @@ namespace OzTip.Web.Controllers
         public ActionResult Details(int id)
         {
             var competition = _competitionRepository.GetById(id);
+            if (competition == null)
+                return HttpNotFound();
+
             return View(competition);
         }
 
@@ -56,8 +60,85 @@ namespace OzTip.Web.Controllers
             };
 
             _competitionRepository.Create(newCompetition);
+            
+            AddToastNotification("success", string.Format("You have successfully created a new competition with the name `{0}`.", viewModel.Name));
 
-            return Success(string.Format("You have successfully created a new competition with the name `{0}`.", viewModel.Name));
+            return RedirectToAction("index");
+        }
+
+        // GET: competitions/manage-settings/{id}
+        [HttpGet]
+        [ActionName("manage-settings")]
+        public ActionResult ManageSettings(int id)
+        {
+            var competition = _competitionRepository.GetById(id);
+            if (competition == null)
+                return HttpNotFound();
+
+            return View(competition);
+        }
+
+        // GET: competitions/invite-players/{id}
+        [HttpGet]
+        [ActionName("invite-players")]
+        public ActionResult InvitePlayers(int id)
+        {
+            var competition = _competitionRepository.GetById(id);
+            if (competition == null)
+                return HttpNotFound();
+
+            var viewModel = new InvitePlayersViewModel
+            {
+                CompetitionId = id,
+                Competition = competition
+            };
+
+            return View(viewModel);
+        }
+        
+        // POST: competitions/invite-players/{id}
+        [HttpPost]
+        [ActionName("invite-players")]
+        public ActionResult InvitePlayers(InvitePlayersViewModel viewModel)
+        {
+            var competition = _competitionRepository.GetById(viewModel.CompetitionId);
+            if (competition == null)
+                return HttpNotFound();
+
+            if (!ModelState.IsValid)
+            {
+                viewModel.Competition = competition;
+                return View(viewModel);
+            }
+
+            foreach (var emailAddress in viewModel.EmailAddresses)
+            {
+                var invitation = new Invitation
+                {
+                    CompetitionId = viewModel.CompetitionId,
+                    Email = emailAddress,
+                    Token = Guid.NewGuid().ToString()
+                };
+
+                var invitationRepository = new RepositoryBase<Invitation>();
+                invitationRepository.Create(invitation);
+            }
+            
+            AddToastNotification("success", "Player invitations have been sent!");
+
+            return RedirectToAction("details", new { id = viewModel.CompetitionId });
+        }
+
+        // GET: competitions/place-tips/{id}
+        [HttpGet]
+        [ActionName("place-tips")]
+        public ActionResult PlaceTips(int id)
+        {
+            var competition = _competitionRepository.GetById(id);
+            if (competition == null)
+                return HttpNotFound();
+
+            return View(competition);
         }
     }
 }

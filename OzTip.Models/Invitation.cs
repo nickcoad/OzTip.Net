@@ -11,6 +11,7 @@ namespace OzTip.Models
     {
         #region Keys
         public int Id { get; set; }
+        public int CompetitionId { get; set; }
         public int? UserId { get; set; }
         #endregion
 
@@ -22,7 +23,6 @@ namespace OzTip.Models
         #region Auditing
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
-        public DateTime Expiry { get; set; }
         #endregion
 
         #region Relationships

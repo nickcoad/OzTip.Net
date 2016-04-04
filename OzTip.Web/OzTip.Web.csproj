@@ -165,15 +165,21 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompetitionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvitationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OzTipControllerBase.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Competitions\InvitePlayersViewModel.cs" />
     <Compile Include="Models\Competitions\CreateCompetitionViewModel.cs" />
+    <Compile Include="Models\Invitations\AcceptExistingUserViewModel.cs" />
+    <Compile Include="Models\Invitations\AcceptNewUserViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ToastNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeders\DefaultInitializer.cs" />
     <Compile Include="Seeders\GameSeeder.cs" />
@@ -190,19 +196,51 @@
     <Content Include="AssetsSrc\style.min.css">
       <DependentUpon>style.css</DependentUpon>
     </Content>
+    <Content Include="Assets\css\animate.css" />
+    <Content Include="Assets\css\bootstrap.css" />
+    <Content Include="Assets\css\bootstrap.min.css" />
+    <Content Include="Assets\css\patterns\1.png" />
+    <Content Include="Assets\css\patterns\2.png" />
+    <Content Include="Assets\css\patterns\3.png" />
+    <Content Include="Assets\css\patterns\4.png" />
+    <Content Include="Assets\css\patterns\5.png" />
+    <Content Include="Assets\css\patterns\6.png" />
+    <Content Include="Assets\css\patterns\7.png" />
+    <Content Include="Assets\css\patterns\congruent_pentagon.png" />
+    <Content Include="Assets\css\patterns\header-profile-skin-1.png" />
+    <Content Include="Assets\css\patterns\header-profile-skin-2.png" />
+    <Content Include="Assets\css\patterns\header-profile-skin-3.png" />
+    <Content Include="Assets\css\patterns\header-profile.png" />
+    <Content Include="Assets\css\patterns\otis_redding.png" />
+    <Content Include="Assets\css\patterns\shattered.png" />
+    <Content Include="Assets\css\patterns\triangular.png" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\css\style.min.css">
       <DependentUpon>style.css</DependentUpon>
     </Content>
+    <Content Include="Assets\fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="Assets\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Assets\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\fonts\font-awesome\less\animated.less" />
+    <Content Include="Assets\fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Assets\fonts\font-awesome\less\core.less" />
+    <Content Include="Assets\fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="Assets\fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="Assets\fonts\font-awesome\less\icons.less" />
+    <Content Include="Assets\fonts\font-awesome\less\larger.less" />
+    <Content Include="Assets\fonts\font-awesome\less\list.less" />
+    <Content Include="Assets\fonts\font-awesome\less\mixins.less" />
+    <Content Include="Assets\fonts\font-awesome\less\path.less" />
+    <Content Include="Assets\fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Assets\fonts\font-awesome\less\stacked.less" />
+    <Content Include="Assets\fonts\font-awesome\less\variables.less" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Assets\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\admin\Views\web.config" />
     <Content Include="Areas\admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\admin\Views\Shared\_Layout.cshtml" />
@@ -290,26 +328,54 @@
     <Content Include="AssetsSrc\bootstrap\utilities.less" />
     <Content Include="AssetsSrc\bootstrap\variables.less" />
     <Content Include="AssetsSrc\bootstrap\wells.less" />
-    <Content Include="Assets\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Assets\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Assets\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\css\bootstrap.css.map" />
+    <Content Include="Assets\css\bootstrap.min.css.map" />
+    <Content Include="Assets\fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Assets\fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_core.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_list.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_path.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="Assets\fonts\font-awesome\scss\_variables.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\app\inspinia.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <None Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\plugins\metisMenu\metisMenu.min.js" />
+    <Content Include="Scripts\plugins\pace\pace.min.js" />
+    <Content Include="Scripts\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\success.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -319,12 +385,9 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -343,13 +406,19 @@
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\success.cshtml" />
     <Content Include="Views\Competitions\index.cshtml" />
     <Content Include="Views\Competitions\details.cshtml" />
     <Content Include="Views\Competitions\create.cshtml" />
     <Content Include="Views\Teams\details.cshtml" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\Shared\_TopNavbar.cshtml" />
+    <Content Include="Views\Competitions\invite-players.cshtml" />
+    <Content Include="Views\Competitions\manage-settings.cshtml" />
+    <Content Include="Views\Competitions\place-tips.cshtml" />
+    <Content Include="Views\Invitations\accept-new-user.cshtml" />
+    <Content Include="Views\Invitations\accept-existing-user.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -357,9 +426,6 @@
     <Folder Include="Views\OzTipControllerBase\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>

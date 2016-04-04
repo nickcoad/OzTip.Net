@@ -1,0 +1,42 @@
+﻿@using System.Diagnostics
+@model OzTip.Web.Models.Competitions.InvitePlayersViewModel
+
+@{
+    ViewBag.Title = "Invite players";
+}
+
+@section breadcrumbs
+{
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("index", "home")">Home</a>
+        </li>
+        <li>
+            <a href="@Url.Action("index", "competitions")">Competitions</a>
+        </li>
+        <li>
+            <a href="@Url.Action("details", "competitions", new { id = Model.Competition.Id })">@Model.Competition.Name</a>
+        </li>
+        <li class="active">
+            <strong>Invite players</strong>
+        </li>
+    </ol>
+}
+
+@using (Html.BeginForm("invite-players", "competitions", FormMethod.Post))
+{
+    var count = 0;
+    
+    @Html.HiddenFor(m => m.CompetitionId)
+    
+    while (count < Model.EmailAddresses.Count)
+    {
+        @Html.TextBoxFor(m => m.EmailAddresses[count])
+        count++;
+    }
+
+    <input type="text" name="EmailAddresses[@count]"/>
+
+    <button type="submit">Invite players</button>
+}
+

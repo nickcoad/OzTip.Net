@@ -1,44 +1,75 @@
-﻿<!DOCTYPE html>
+﻿@using OzTip.Web.Models
+<!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewBag.Title - OzTip</title>
-    @Styles.Render("~/Assets/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/plugins/toastrStyles")
 
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/font-awesome/css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("OzTip", "index", "home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "index", new { area = "", controller = "home" })</li>
-                    <li>@Html.ActionLink("Your Competitions", "index", new { area = "", controller = "competitions" })</li>
-                    <li>@Html.ActionLink("Contact Us", "contact", new { area = "", controller = "home" })</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - OzTip</p>
-        </footer>
-    </div>
 
+    <!-- Wrapper-->
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        @Html.Partial("_Navigation")
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- Top Navbar -->
+            @Html.Partial("_TopNavbar")
+
+            @if (!string.IsNullOrEmpty(ViewBag.Title))
+            {
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-lg-10">
+                        <h2>@ViewBag.Title</h2>
+                        @RenderSection("breadcrumbs", false)
+                    </div>
+                </div>
+            }
+            
+            <div class="wrapper wrapper-content animated fadeInUp">
+                <!-- Main view  -->
+                @RenderBody()
+            </div>
+
+            <!-- Footer -->
+            @Html.Partial("_Footer")
+
+        </div>
+        <!-- End page wrapper-->
+
+    </div>
+    <!-- End wrapper-->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/plugins/metsiMenu")
+    @Scripts.Render("~/plugins/pace")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/bundles/inspinia")
+    @Scripts.Render("~/plugins/toastr")
+
+
     @RenderSection("scripts", required: false)
+
+    @{
+        var toastNotification = TempData["ToastNotification"] as ToastNotification;
+
+        if (toastNotification != null)
+        {
+            <script>
+                toastr.options.positionClass = 'toast-top-center';
+                toastr['@toastNotification.Type']('@toastNotification.Message');
+            </script>
+        }
+    }
 </body>
 </html>

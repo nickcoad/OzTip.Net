@@ -1,0 +1,73 @@
+﻿@model OzTip.Web.Models.Invitations.AcceptNewUserViewModel
+
+@{
+    ViewBag.Title = "Invite players";
+}
+
+@section breadcrumbs
+{
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("index", "home")">Home</a>
+        </li>
+        <li>
+            <a href="@Url.Action("index", "competitions")">Competitions</a>
+        </li>
+        <li>
+            <a href="@Url.Action("details", "competitions", new { id = Model.Competition.Id })">@Model.Competition.Name</a>
+        </li>
+        <li class="active">
+            <strong>Accept invitation</strong>
+        </li>
+    </ol>
+}
+
+<div class="ibox col-md-4 col-md-offset-4">
+    <div class="ibox-title">
+        <h5>Accept and register</h5>
+    </div>
+    <div class="ibox-content">
+        @using (Html.BeginForm("accept-new-user", "invitations", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Token)
+            <p>Fill in your details below to register a new account.</p>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName, null, new { @class = "error text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, null, new { @class = "error text-danger", @readonly = "true" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "error text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "error text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <button type="submit" class="btn btn-default">Accept invitation</button>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

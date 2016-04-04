@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using OzTip.Models;
 using System.Web;
 using System.Web.Mvc;
+using OzTip.Web.Models;
 
 namespace OzTip.Web.Controllers
 {
@@ -14,6 +15,15 @@ namespace OzTip.Web.Controllers
         public ActionResult Success(string message)
         {
             return View("success", null, message);
+        }
+
+        public void AddToastNotification(string type, string message)
+        {
+            TempData["ToastNotification"] = new ToastNotification
+            {
+                Type = type,
+                Message = message
+            };
         }
     }
 }

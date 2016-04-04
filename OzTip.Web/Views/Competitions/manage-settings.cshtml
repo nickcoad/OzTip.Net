@@ -1,0 +1,23 @@
+﻿@model OzTip.Models.Competition
+
+@{
+    ViewBag.Title = "Manage settings";
+}
+
+@section breadcrumbs
+{
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("index", "home")">Home</a>
+        </li>
+        <li>
+            <a href="@Url.Action("index", "competitions")">Competitions</a>
+        </li>
+        <li>
+            <a href="@Url.Action("details", "competitions", new { id = Model.Id })">@Model.Name</a>
+        </li>
+        <li class="active">
+            <strong>Manage settings</strong>
+        </li>
+    </ol>
+}

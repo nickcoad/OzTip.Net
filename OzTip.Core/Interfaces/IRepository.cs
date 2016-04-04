@@ -19,6 +19,8 @@ namespace OzTip.Core.Interfaces
 
         TEntity Update(TEntity entityToSave);
 
+        void SaveChanges();
+
         void Delete(int id);
     }
 }
