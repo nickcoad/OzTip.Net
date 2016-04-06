@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 using OzTip.Core.Interfaces;
 using OzTip.Data;
 using OzTip.Models;
@@ -19,7 +20,7 @@ namespace OzTip.Web.Controllers
     {
         private readonly IRepository<Competition> _competitionRepository = new RepositoryBase<Competition>();
         private readonly IRepository<Invitation> _invitationRepository = new RepositoryBase<Invitation>();
-        private readonly IRepository<User> _userRepository = new RepositoryBase<User>();
+        private readonly IRepository<User> _userRepository;
         private ApplicationUserManager _userManager;
 
         public ApplicationUserManager UserManager
@@ -32,6 +33,13 @@ namespace OzTip.Web.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        public InvitationsController()
+        {
+            _competitionRepository = new RepositoryBase<Competition>(context);
+            _invitationRepository = new RepositoryBase<Invitation>(context);
+            _userRepository = new RepositoryBase<User>(context);
         }
 
         // GET: competitions/accept/?token={token}
@@ -97,7 +105,7 @@ namespace OzTip.Web.Controllers
             };
 
             var result = await UserManager.CreateAsync(newUser, viewModel.Password);
-            _userRepository.SaveChanges();
+            var createdUser = _userRepository.GetById(newUser.Id);
 
             if (!result.Succeeded)
             {
@@ -107,7 +115,7 @@ namespace OzTip.Web.Controllers
 
             try
             {
-                competition.Users.Add(newUser);
+                competition.Users.Add(createdUser);
                 _competitionRepository.SaveChanges();
             }
             catch (Exception e)
