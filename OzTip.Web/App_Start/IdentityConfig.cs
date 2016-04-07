@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using OzTip.Web.Models;
 using OzTip.Models;
 using OzTip.Data;
 
@@ -44,7 +40,7 @@ namespace OzTip.Web
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new UserStore<User, Role, int, UserLogin, UserRole, UserClaim>(context.Get<OzTipContext>()));
+            var manager = new ApplicationUserManager(new ApplicationUserStore(context.Get<OzTipContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<User, int>(manager)
             {
@@ -106,6 +102,23 @@ namespace OzTip.Web
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+        }
+    }
+
+    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+    public class ApplicationUserStore : UserStore<User, Role, int, UserLogin, UserRole, UserClaim>
+    {
+        public ApplicationUserStore(DbContext context)
+            : base(context)
+        {
+        }
+    }
+
+    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+    public class ApplicationRoleStore : RoleStore<Role, int, UserRole>
+    {
+        public ApplicationRoleStore(DbContext context) : base(context)
+        {
         }
     }
 }

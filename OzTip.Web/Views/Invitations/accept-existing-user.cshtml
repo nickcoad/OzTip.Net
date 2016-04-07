@@ -1,6 +1,6 @@
 ﻿@model OzTip.Web.Models.Invitations.AcceptExistingUserViewModel
 
-@using (Html.BeginForm("accept", "invitations", FormMethod.Post))
+@using (Html.BeginForm("accept-existing-user", "invitations", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.Token)
     <button type="submit">Accept!</button>

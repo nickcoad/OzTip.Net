@@ -10,20 +10,14 @@ using OzTip.Core.Interfaces;
 
 namespace OzTip.Data
 {
-    public class RepositoryBase<TEntity> : IRepository<TEntity>, IDisposable
+    public class RepositoryBase<TEntity> : IRepository<TEntity>
         where TEntity : class
 
     {
-        private readonly OzTipContext _context;
+        private readonly DbContext _context;
         private readonly DbSet<TEntity> _set;
 
-        public RepositoryBase()
-        {
-            _context = new OzTipContext();
-            _set = _context.Set<TEntity>();
-        }
-
-        public RepositoryBase(OzTipContext context)
+        public RepositoryBase(DbContext context)
         {
             _context = context;
             _set = _context.Set<TEntity>();
@@ -81,11 +75,6 @@ namespace OzTip.Data
         public void SaveChanges()
         {
             _context.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
         }
     }
 }

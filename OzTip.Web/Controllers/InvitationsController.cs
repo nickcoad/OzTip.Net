@@ -1,49 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
 using OzTip.Core.Interfaces;
-using OzTip.Data;
 using OzTip.Models;
-using OzTip.Web.Models.Competitions;
 using OzTip.Web.Models.Invitations;
 
 namespace OzTip.Web.Controllers
 {
     public class InvitationsController : OzTipControllerBase
     {
-        private readonly IRepository<Competition> _competitionRepository = new RepositoryBase<Competition>();
-        private readonly IRepository<Invitation> _invitationRepository = new RepositoryBase<Invitation>();
+        private readonly IRepository<Competition> _competitionRepository;
+        private readonly IRepository<Invitation> _invitationRepository;
         private readonly IRepository<User> _userRepository;
-        private ApplicationUserManager _userManager;
+        private readonly ApplicationUserManager _userManager;
 
-        public ApplicationUserManager UserManager
+        public InvitationsController(
+            IRepository<Competition> competitionRepository,
+            IRepository<Invitation> invitationRepository,
+            IRepository<User> userRepository,
+            ApplicationUserManager userManager)
+            : base(userManager)
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        public InvitationsController()
-        {
-            _competitionRepository = new RepositoryBase<Competition>(context);
-            _invitationRepository = new RepositoryBase<Invitation>(context);
-            _userRepository = new RepositoryBase<User>(context);
+            _competitionRepository = competitionRepository;
+            _invitationRepository = invitationRepository;
+            _userRepository = userRepository;
+            _userManager = userManager;
         }
 
         // GET: competitions/accept/?token={token}
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Accept(string token)
         {
             var invitation = _invitationRepository.GetWhere(inv => inv.Token == token).FirstOrDefault();
@@ -74,12 +64,48 @@ namespace OzTip.Web.Controllers
                 User = user,
                 Token = token
             };
+            
+            return RedirectToAction("accept-existing-user", new { token });
+        }
+
+        [HttpGet]
+        [ActionName("accept-existing-user")]
+        public ActionResult AcceptExistingUser(string token)
+        {
+            var invitation = _invitationRepository.GetWhere(inv => inv.Token == token).FirstOrDefault();
+            if (invitation == null)
+                return HttpNotFound();
+
+            var acceptExistingUserViewModel = new AcceptExistingUserViewModel();
 
             return View("accept-existing-user", acceptExistingUserViewModel);
         }
 
+        [HttpPost]
+        [ActionName("accept-existing-user")]
+        public ActionResult AcceptExistingUser(AcceptExistingUserViewModel viewModel)
+        {
+            var invitation = _invitationRepository.GetWhere(inv => inv.Token == viewModel.Token).FirstOrDefault();
+            if (invitation == null)
+                return HttpNotFound();
+
+            if (LoggedInUser.Email != invitation.Email)
+            {
+                return Error("The token you have supplied does not match a valid invitation.");
+            }
+
+            // We have the correct user logged in. Add them to the competition.
+            var competition = _competitionRepository.GetById(invitation.CompetitionId);
+            competition.Users.Add(LoggedInUser);
+            _competitionRepository.SaveChanges();
+            
+            AddToastNotification("success", "You have successfully accepted the invitation to join!");
+            return RedirectToAction("index", "home");
+        }
+
         // GET: competitions/accept-new-user
         [HttpPost]
+        [AllowAnonymous]
         [ActionName("accept-new-user")]
         public async Task<ActionResult> AcceptNewUser(AcceptNewUserViewModel viewModel)
         {
@@ -104,7 +130,7 @@ namespace OzTip.Web.Controllers
                 Updated = DateTime.UtcNow
             };
 
-            var result = await UserManager.CreateAsync(newUser, viewModel.Password);
+            var result = await _userManager.CreateAsync(newUser, viewModel.Password);
             var createdUser = _userRepository.GetById(newUser.Id);
 
             if (!result.Succeeded)

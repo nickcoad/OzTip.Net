@@ -9,12 +9,7 @@ namespace OzTip.Web.Areas.Admin.Controllers
     public class SeasonsController : Controller
     {
         private readonly IRepository<Season> _seasonRepository;
-
-        public SeasonsController()
-        {
-            _seasonRepository = new RepositoryBase<Season>();
-        }
-
+        
         public SeasonsController(
             IRepository<Season> seasonRepository)
         {
@@ -116,15 +111,6 @@ namespace OzTip.Web.Areas.Admin.Controllers
         {
             _seasonRepository.Delete(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _seasonRepository.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

@@ -193,9 +193,9 @@ namespace OzTip.FixtureImporter
                 Console.WriteLine("No upcoming events found.");
             }
 
-            var seasonRepo = new RepositoryBase<Season>();
+            var seasonRepo = new RepositoryBase<Season>(new OzTipContext());
             var seasons = seasonRepo.Get();
-            var userRepo = new RepositoryBase<User>();
+            var userRepo = new RepositoryBase<User>(new OzTipContext());
             var users = userRepo.Get();
             
             foreach (var season in seasons)

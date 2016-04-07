@@ -12,14 +12,7 @@ namespace OzTip.Web.Areas.Admin.Controllers
         private readonly IRepository<Competition> _competitionRepository;
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Season> _seasonRepository;
-
-        public CompetitionsController()
-        {
-            _competitionRepository = new RepositoryBase<Competition>();
-            _userRepository = new RepositoryBase<User>();
-            _seasonRepository = new RepositoryBase<Season>();
-        }
-
+        
         public CompetitionsController(
             IRepository<Competition> competitionRepository,
             IRepository<User> userRepository,
@@ -139,18 +132,6 @@ namespace OzTip.Web.Areas.Admin.Controllers
             _competitionRepository.Delete(id);
 
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _competitionRepository.Dispose();
-                _seasonRepository.Dispose();
-                _userRepository.Dispose();
-            }
-
-            base.Dispose(disposing);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace OzTip.Core.Interfaces
 {
-    public interface IRepository<TEntity> : IDisposable
+    public interface IRepository<TEntity>
     {
         TEntity GetById(int id);
 

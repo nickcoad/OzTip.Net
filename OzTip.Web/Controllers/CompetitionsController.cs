@@ -7,13 +7,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using OzTip.Web.Models;
 
 namespace OzTip.Web.Controllers
 {
     public class CompetitionsController : OzTipControllerBase
     {
-        private readonly IRepository<Competition> _competitionRepository = new RepositoryBase<Competition>();
+        private readonly IRepository<Competition> _competitionRepository;
+        private readonly IRepository<Invitation> _invitationRepository;
+
+        public CompetitionsController(
+            IRepository<Competition> competitionRepository,
+            IRepository<Invitation> invitationRepository,
+            ApplicationUserManager userManager)
+            : base(userManager)
+        {
+            _competitionRepository = competitionRepository;
+            _invitationRepository = invitationRepository;
+        }
 
         // GET: competitions
         [HttpGet]
@@ -120,8 +132,7 @@ namespace OzTip.Web.Controllers
                     Token = Guid.NewGuid().ToString()
                 };
 
-                var invitationRepository = new RepositoryBase<Invitation>();
-                invitationRepository.Create(invitation);
+                _invitationRepository.Create(invitation);
             }
             
             AddToastNotification("success", "Player invitations have been sent!");
