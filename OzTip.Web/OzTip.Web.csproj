@@ -201,6 +201,7 @@
     <Compile Include="Seeders\TeamSeeder.cs" />
     <Compile Include="Seeders\UserSeeder.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Helpers\MailHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AssetsSrc\style.css">
@@ -436,6 +437,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Models\" />
+    <Folder Include="Utility\" />
     <Folder Include="Views\OzTipControllerBase\" />
   </ItemGroup>
   <ItemGroup>

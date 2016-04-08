@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using OzTip.Web.Helpers;
 using OzTip.Web.Models;
 
 namespace OzTip.Web.Controllers
@@ -133,6 +134,8 @@ namespace OzTip.Web.Controllers
                 };
 
                 _invitationRepository.Create(invitation);
+
+                MailHelper.SendEmail(emailAddress, string.Format("You have been invited to participate in a competition! <a href='{0}'>Accept your invite now</a>!", Url.Action("accept", "invitations", new { token = invitation.Token }, "https")));
             }
             
             AddToastNotification("success", "Player invitations have been sent!");
