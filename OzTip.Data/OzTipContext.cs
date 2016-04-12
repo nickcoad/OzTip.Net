@@ -74,21 +74,20 @@ namespace OzTip.Data
 
         public override int SaveChanges()
         {
-            DateTime now = DateTime.UtcNow;
-            foreach (ObjectStateEntry entry in (this as IObjectContextAdapter).ObjectContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added | EntityState.Modified))
+            var now = DateTime.UtcNow;
+
+            foreach (var entry in (this as IObjectContextAdapter).ObjectContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added | EntityState.Modified))
             {
-                if (!entry.IsRelationship)
-                {
-                    var record = entry.Entity as IHasTimeStamps;
+                if (entry.IsRelationship) continue;
 
-                    if (record != null)
-                    {
-                        if (entry.State == EntityState.Added)
-                            record.Created = now;
+                var record = entry.Entity as IHasTimeStamps;
 
-                        record.Updated = now;
-                    }
-                }
+                if (record == null) continue;
+
+                if (entry.State == EntityState.Added)
+                    record.Created = now;
+
+                record.Updated = now;
             }
 
             return base.SaveChanges();
