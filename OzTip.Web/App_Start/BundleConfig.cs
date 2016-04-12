@@ -39,7 +39,8 @@ namespace OzTip.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Assets/css/bootstrap.min.css",
                       "~/Assets/css/animate.css",
-                      "~/Assets/css/style.css"));
+                      "~/Assets/css/inspinia.css",
+                      "~/Assets/css/style.min.css"));
 
             // toastr notification 
             bundles.Add(new ScriptBundle("~/plugins/toastr").Include(

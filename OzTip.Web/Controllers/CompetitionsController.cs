@@ -114,15 +114,12 @@ namespace OzTip.Web.Controllers
         [ActionName("invite-players")]
         public ActionResult InvitePlayers(InvitePlayersViewModel viewModel)
         {
-            var competition = _competitionRepository.GetById(viewModel.CompetitionId);
-            if (competition == null)
+            viewModel.Competition = _competitionRepository.GetById(viewModel.CompetitionId);
+            if (viewModel.Competition == null)
                 return HttpNotFound();
 
-            if (!ModelState.IsValid)
-            {
-                viewModel.Competition = competition;
+            if (!ModelState.IsValid || viewModel.EmailAddresses.Any(string.IsNullOrEmpty))
                 return View(viewModel);
-            }
 
             foreach (var emailAddress in viewModel.EmailAddresses)
             {
@@ -133,9 +130,24 @@ namespace OzTip.Web.Controllers
                     Token = Guid.NewGuid().ToString()
                 };
 
-                _invitationRepository.Create(invitation);
+                try
+                {
+                    MailHelper.SendEmail(emailAddress,
+                        string.Format(
+                            "You have been invited to participate in a competition! <a href='{0}'>Accept your invite now</a>!",
+                            Url.Action("accept", "invitations", new {token = invitation.Token}, "https")));
 
-                MailHelper.SendEmail(emailAddress, string.Format("You have been invited to participate in a competition! <a href='{0}'>Accept your invite now</a>!", Url.Action("accept", "invitations", new { token = invitation.Token }, "https")));
+                    _invitationRepository.Create(invitation);
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("invitations", string.Format("Error sending email to {0}: {1}", emailAddress, e.Message));
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
             }
             
             AddToastNotification("success", "Player invitations have been sent!");

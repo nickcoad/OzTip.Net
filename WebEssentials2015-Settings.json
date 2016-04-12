@@ -1,26 +1,38 @@
 ﻿{
-  "BrowserLink": {
-    "CssIgnorePatterns": "bootstrap*; reset.css; normalize.css; jquery*; toastr*; foundation*; animate*; inuit*; elements*; ratchet*; hint*; flat-ui*; 960*; skeleton*",
-    "EnableMenu": true,
-    "EnablePixelPushing": true,
-    "ShowMenu": true
-  },
-  "CodeGen": {
-    "AddTypeScriptReferencePath": true,
-    "CamelCaseEnumerationValues": false,
-    "CamelCasePropertyNames": true,
-    "CamelCaseTypeNames": false
-  },
-  "Css": {
-    "ShowBrowserTooltip": true,
-    "ShowInitialInherit": false,
-    "SyncBase64ImageValues": true,
-    "SyncVendorValues": true,
-    "ValidateDuplicateSelectors": true,
-    "ValidateStarSelector": true,
-    "ValidateVendorSpecifics": true,
-    "ValidateZeroUnit": true,
-    "ValidationLocation": "Messages"
+    "BrowserLink": {
+        "CssIgnorePatterns": "bootstrap*; reset.css; normalize.css; jquery*; toastr*; foundation*; animate*; inuit*; elements*; ratchet*; hint*; flat-ui*; 960*; skeleton*",
+        "EnableMenu": true,
+        "EnablePixelPushing": true,
+        "ShowMenu": true
+    },
+    "CodeGen": {
+        "AddTypeScriptReferencePath": true,
+        "CamelCaseEnumerationValues": false,
+        "CamelCasePropertyNames": true,
+        "CamelCaseTypeNames": false
+    },
+    "Css": {
+        "ShowBrowserTooltip": true,
+        "ShowInitialInherit": false,
+        "SyncBase64ImageValues": true,
+        "SyncVendorValues": true,
+        "ValidateDuplicateSelectors": true,
+        "ValidateStarSelector": true,
+        "ValidateVendorSpecifics": true,
+        "ValidateZeroUnit": true,
+        "ValidationLocation": "Messages"
+    },
+  "Less": {
+    "AdjustRelativePaths": true,
+    "CompileOnBuild": false,
+    "CompileOnSave": false,
+    "EnableChainCompilation": true,
+    "GenerateSourceMaps": true,
+    "MinifyInPlace": false,
+    "OutputDirectory": "/Assets/css/",
+    "ProcessSourceMapsForEditorEnhancements": true,
+    "ShowPreviewPane": true,
+    "StrictMath": false
   },
   "General": {
     "AllMessagesToOutputWindow": false,

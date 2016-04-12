@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewBag.Title - OzTip</title>
-    @Styles.Render("~/plugins/toastrStyles")
 
+    @Scripts.Render("~/bundles/jquery")
+
+    @Styles.Render("~/plugins/toastrStyles")
     @Styles.Render("~/Content/css")
     @Styles.Render("~/font-awesome/css")
 </head>
@@ -35,7 +37,7 @@
                     </div>
                 </div>
             }
-            
+
             <div class="wrapper wrapper-content animated fadeInUp">
                 <!-- Main view  -->
                 @RenderBody()
@@ -49,7 +51,6 @@
 
     </div>
     <!-- End wrapper-->
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/plugins/metsiMenu")
     @Scripts.Render("~/plugins/pace")

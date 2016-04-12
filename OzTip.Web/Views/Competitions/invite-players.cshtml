@@ -33,25 +33,46 @@
             var count = 0;
 
             @Html.HiddenFor(m => m.CompetitionId)
+            
+            @Html.ValidationSummary()
 
-            while (count < Model.EmailAddresses.Count)
-            {
-                @Html.TextBoxFor(m => m.EmailAddresses[count])
-                count++;
-            }
-
-            <div class="form-group">
-                <label class="col-md-3">Email address</label>
-                <div class="col-md-9">
-                    <input class="form-control" type="text" name="EmailAddresses[@count]"/>
-                </div>
+            <div class="email-addresses">
+                @while (count < Model.EmailAddresses.Count)
+                {
+                    <div class="form-group email-address-form-group">
+                        <label class="col-md-3">Email address</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.EmailAddresses[count], new { @class = "form-control" })
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default remove-email-address" type="button"><span class="fa fa-remove"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    count++;
+                }
+                @if (!Model.EmailAddresses.Any())
+                {
+                    <div class="form-group email-address-form-group">
+                        <label class="col-md-3">Email address</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="EmailAddresses[@count]" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default remove-email-address" type="button"><span class="fa fa-remove"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
             <div class="row">
                 <div class="col-md-9 col-md-offset-3">
-                    <button type="button" class="btn btn-sm btn-default">Add another email address...</button>
+                    <button type="button" class="btn btn-sm btn-default add-email-address"><span class="fa fa-plus-circle"></span> Add another email address...</button>
                 </div>
             </div>
-            <hr/>
+            <hr />
             <div class="row">
                 <div class="col-xs-12">
                     <button type="submit" class="btn btn-block btn-primary">Invite players</button>
@@ -61,4 +82,33 @@
     </div>
 </div>
 
+<script>
+    var emailAddressField = $(".email-address-form-group:first");
 
+    $(".add-email-address").on("click", function () {
+        addEmailAddress();
+    });
+
+    $(document).on("click", ".remove-email-address", function () {
+        removeEmailAddress(this);
+    });
+
+    function addEmailAddress() {
+        emailAddressField.clone().find("input").val("").parents(".email-address-form-group").appendTo($(".email-addresses"));
+        updateIdsAndNames();
+    }
+
+    function removeEmailAddress(elem) {
+        $(elem).parents(".email-address-form-group").remove();
+        updateIdsAndNames();
+    }
+
+    function updateIdsAndNames() {
+        $(".email-address-form-group input").each(function (index, elem) {
+            $(elem).attr("id", "EmailAddresses_" + index + "_");
+            $(elem).attr("name", "EmailAddresses[" + index + "]");
+        });
+    }
+
+    updateIdsAndNames();
+</script>
