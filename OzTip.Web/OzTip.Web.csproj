@@ -181,6 +181,7 @@
     <Compile Include="Controllers\InvitationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OzTipControllerBase.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -192,6 +193,7 @@
     <Compile Include="Models\Invitations\AcceptExistingUserViewModel.cs" />
     <Compile Include="Models\Invitations\AcceptNewUserViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Search\SearchResultsViewModel.cs" />
     <Compile Include="Models\ToastNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeders\DefaultInitializer.cs" />
@@ -434,6 +436,7 @@
     <Content Include="Views\Competitions\place-tips.cshtml" />
     <Content Include="Views\Invitations\accept-new-user.cshtml" />
     <Content Include="Views\Invitations\accept-existing-user.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

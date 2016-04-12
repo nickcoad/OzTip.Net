@@ -28,5 +28,10 @@ namespace OzTip.Models
         public virtual User Owner { get; set; }
         public virtual ICollection<User> Users { get; set; }
         #endregion
+
+        public Competition()
+        {
+            Users = new List<User>();
+        }
     }
 }

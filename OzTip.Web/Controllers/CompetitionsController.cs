@@ -73,10 +73,12 @@ namespace OzTip.Web.Controllers
             };
 
             _competitionRepository.Create(newCompetition);
+            newCompetition.Users.Add(LoggedInUser);
+            _competitionRepository.SaveChanges();
             
             AddToastNotification("success", string.Format("You have successfully created a new competition with the name `{0}`.", viewModel.Name));
 
-            return RedirectToAction("index");
+            return RedirectToAction("details", new { id = newCompetition.Id });
         }
 
         // GET: competitions/manage-settings/{id}
@@ -118,8 +120,14 @@ namespace OzTip.Web.Controllers
             if (viewModel.Competition == null)
                 return HttpNotFound();
 
-            if (!ModelState.IsValid || viewModel.EmailAddresses.Any(string.IsNullOrEmpty))
+            viewModel.EmailAddresses.RemoveAll(string.IsNullOrEmpty);
+
+            if (!ModelState.IsValid || !viewModel.EmailAddresses.Any())
+            {
                 return View(viewModel);
+            }
+
+            var loopIndex = 0;
 
             foreach (var emailAddress in viewModel.EmailAddresses)
             {
@@ -141,8 +149,10 @@ namespace OzTip.Web.Controllers
                 }
                 catch (Exception e)
                 {
-                    ModelState.AddModelError("invitations", string.Format("Error sending email to {0}: {1}", emailAddress, e.Message));
+                    ModelState.AddModelError(string.Format("EmailAddresses[{0}]", loopIndex), string.Format("Error sending email to {0}: {1}", emailAddress, e.Message));
                 }
+
+                loopIndex++;
             }
 
             if (!ModelState.IsValid)

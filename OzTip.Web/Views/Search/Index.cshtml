@@ -1,0 +1,39 @@
+﻿@model OzTip.Web.Models.Search.SearchResultsViewModel
+
+@{
+    ViewBag.Title = "Search results";
+}
+
+@section headerContent
+{
+    <p>You searched for: <strong>@Model.SearchString</strong></p>
+}
+
+@if (Model.Competitions.Any())
+{
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Search results</h5>
+                </div>
+                <div class="ibox-content">
+                    <p>@Model.Competitions.Count competition(s) found:</p>
+                    <ul>
+                        @foreach (var competition in Model.Competitions)
+                        {
+                            <li>@Html.ActionLink(competition.Name, "details", "competitions", new {id = competition.Id}, null)</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>    
+    </div>
+    
+}
+else
+{
+    <div class="jumbotron text-center">
+        <h1>No results found.</h1>
+    </div>
+}
