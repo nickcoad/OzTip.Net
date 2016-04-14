@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 col-lg-2 control-label">Description</label>
+                        @Html.LabelFor(m => m.Description, new { @class = "control-label col-sm-3 col-lg-2" })
                         <div class="col-sm-9 col-lg-10">
                             @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
                         </div>
@@ -54,7 +54,15 @@
                         </div>
                     </div>
 
-                    <hr/>
+                    <div class="form-group competition-password">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label col-sm-3 col-lg-2" })
+                        <div class="col-sm-9 col-lg-10">
+                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "secret01" })
+                            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "error text-danger" })
+                        </div>
+                    </div>
+
+                    <hr />
 
                     <div class="form-group">
                         <div class="col-xs-12">
@@ -88,6 +96,22 @@
                     $(element).removeClass('error').addClass('success');
                 }
             }
+        });
+
+        $.fn.mySlideToggle = function (show, speed) {
+            if (show) {
+                $(this).slideDown(speed);
+            }
+            else {
+                $(this).slideUp(speed);
+            }
+        }
+
+        $(".competition-password").toggle($("#IsPublic").is(":checked"));
+
+        $("#IsPublic").on("change", function () {
+            console.log($(this).is(":checked"));
+            $(".competition-password").mySlideToggle($(this).is(":checked"), 'fast');
         });
     </script>
 }

@@ -19,16 +19,30 @@
     </ol>
 }
 
-<div class="competition-actions">
-    <a class="btn btn-primary" href="@Url.Action("place-tips", "competitions", new { id = Model.Id })"><span class="fa fa-check-square-o"></span> Place tips</a>
-    <a class="btn btn-default" href="@Url.Action("invite-players", "competitions", new { id = Model.Id })"><span class="fa fa-user"></span> Invite players</a>
-    <a class="btn btn-default" href="@Url.Action("manage-settings", "competitions", new {id = Model.Id})"><span class="fa fa-cog"></span> Manage settings</a>
-    <div class="pull-right">
-        <a class="btn btn-danger" href="@Url.Action("delete", "competitions", new {id = Model.Id})"><span class="fa fa-remove"></span> Delete competition</a>
-    </div>
-</div>
+@if (ViewBag.UserIsInCompetition ?? false)
+{
+    <div class="competition-actions">
+        <a class="btn btn-primary" href="@Url.Action("place-tips", "competitions", new {id = Model.Id})"><span class="fa fa-check-square-o"></span> Place tips</a>
+        <a class="btn btn-default" href="@Url.Action("invite-players", "competitions", new {id = Model.Id})"><span class="fa fa-user"></span> Invite players</a>
 
-<hr/>
+        @if (ViewBag.UserIsOwner ?? false)
+        {
+            <a class="btn btn-default" href="@Url.Action("manage-settings", "competitions", new {id = Model.Id})"><span class="fa fa-cog"></span> Manage settings</a>
+            <div class="pull-right">
+                <a class="btn btn-danger" href="@Url.Action("delete", "competitions", new {id = Model.Id})"><span class="fa fa-remove"></span> Delete competition</a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="competition-actions">
+        <a class="btn btn-primary" href="@Url.Action("join", "competitions", new {id = Model.Id})"><span class="fa fa-check-square-o"></span> Join competition</a>
+    </div>
+}
+
+
+<hr />
 
 <div class="row">
     <div class="col-md-3">
@@ -65,30 +79,30 @@
                 {
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Actual Name</th>
-                            <th>Created</th>
-                            <th>Updated</th>
-                        </tr>
+                            <tr>
+                                <th>Username</th>
+                                <th>Actual Name</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var user in Model.Users)
-                        {
-                            <tr>
-                                <td>@user.UserName</td>
-                                <td>@user.GivenName @user.Surname</td>
-                                <td>@user.Created</td>
-                                <td>@user.Updated</td>
-                            </tr>
-                        }
+                            @foreach (var user in Model.Users)
+                            {
+                                <tr>
+                                    <td>@user.UserName</td>
+                                    <td>@user.GivenName @user.Surname</td>
+                                    <td>@user.Created</td>
+                                    <td>@user.Updated</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 }
                 else
                 {
                     <p>
-                        No players are enrolled in this competition. Would you like to @Html.ActionLink("invite some friends", "invite-players", "competitions", new {id = Model.Id}, null)?
+                        No players are enrolled in this competition. Would you like to @Html.ActionLink("invite some friends", "invite-players", "competitions", new { id = Model.Id }, null)?
                     </p>
                 }
             </div>

@@ -44,6 +44,12 @@ namespace OzTip.Web.Controllers
             if (competition == null)
                 return HttpNotFound();
 
+            // Is this user participating in the competition?
+            ViewBag.UserIsInCompetition = competition.Users.Any(us => us.Id == LoggedInUser.Id);
+
+            // Is this user the owner of the competition?
+            ViewBag.UserIsOwner = competition.Owner.Id == LoggedInUser.Id;
+
             return View(competition);
         }
 
@@ -66,6 +72,8 @@ namespace OzTip.Web.Controllers
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
+                Password = viewModel.Password,
+                IsPublic = viewModel.IsPublic,
                 UserId = 1,
                 SeasonId = 1,
                 Created = DateTime.UtcNow,
@@ -79,6 +87,34 @@ namespace OzTip.Web.Controllers
             AddToastNotification("success", string.Format("You have successfully created a new competition with the name `{0}`.", viewModel.Name));
 
             return RedirectToAction("details", new { id = newCompetition.Id });
+        }
+
+        // GET: competitions/join/{id}
+        [HttpGet]
+        public ActionResult Join(int id)
+        {
+            var competition = _competitionRepository.GetById(id);
+            var viewModel = new JoinCompetitionViewModel
+            {
+                CompetitionId = competition.Id,
+                CompetitionName = competition.Name,
+                CompetitionDescription = competition.Description,
+                CompetitionIsPublic = competition.IsPublic
+            };
+            return View(viewModel);
+        }
+
+        // POST: competitions/join/{id}
+        [HttpPost]
+        public ActionResult Join(JoinCompetitionViewModel viewModel)
+        {
+            var competition = _competitionRepository.GetById(viewModel.CompetitionId);
+            viewModel.CompetitionId = competition.Id;
+            viewModel.CompetitionName = competition.Name;
+            viewModel.CompetitionDescription = competition.Description;
+            viewModel.CompetitionIsPublic = competition.IsPublic;
+
+            return View(viewModel);
         }
 
         // GET: competitions/manage-settings/{id}

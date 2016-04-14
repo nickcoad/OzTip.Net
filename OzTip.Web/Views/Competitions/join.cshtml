@@ -1,0 +1,104 @@
+﻿@model OzTip.Web.Models.Competitions.JoinCompetitionViewModel
+
+@{ 
+    ViewBag.Title = "Join competition";
+}
+
+@section breadcrumbs
+{
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("index", "home")">Home</a>
+        </li>
+        <li>
+            <a href="@Url.Action("index", "competitions")">Competitions</a>
+        </li>
+        <li>
+            <a href="@Url.Action("details", "competitions", new { id = Model.CompetitionId })">@Model.CompetitionName</a>
+        </li>
+        <li class="active">
+            <strong>Join competition</strong>
+        </li>
+    </ol>
+}
+
+
+@using (Html.BeginForm("join", "competitions", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(m => m.CompetitionId)
+    @Html.HiddenFor(m => m.CompetitionName)
+    @Html.HiddenFor(m => m.CompetitionDescription)
+    @Html.HiddenFor(m => m.CompetitionIsPublic)
+    
+    <div class="col-xs-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Join competition</h5>
+            </div>
+            <div class="ibox-content">
+                    @if (Model.CompetitionIsPublic)
+                    {
+                        <p>Are you sure you'd like to join this competition?</p>
+                    }
+                    else
+                    {
+                        <p>This is a private competition: please request an invite or enter the password to join now!</p>
+                        @Html.LabelFor(m => m.Password, new {@class = "control-label col-sm-3 col-lg-2"})
+                        <div class="col-sm-9 col-lg-10">
+                            @Html.TextBoxFor(m => m.Password, new {@class = "form-control", placeholder = "secret01"})
+                            @Html.ValidationMessageFor(m => m.Password, null, new {@class = "error text-danger"})
+                        </div>
+                    }
+
+                    <hr/>
+
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Join now!</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $.validator.setDefaults({
+            highlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).addClass(errorClass).removeClass(validClass);
+                } else {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                    $(element).removeClass('success').addClass('error');
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).removeClass(errorClass).addClass(validClass);
+                } else {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                    $(element).removeClass('error').addClass('success');
+                }
+            }
+        });
+
+        $.fn.mySlideToggle = function (show, speed) {
+            if (show) {
+                $(this).slideDown(speed);
+            }
+            else {
+                $(this).slideUp(speed);
+            }
+        }
+
+        $(".competition-password").toggle($("#IsPublic").is(":checked"));
+
+        $("#IsPublic").on("change", function () {
+            console.log($(this).is(":checked"));
+            $(".competition-password").mySlideToggle($(this).is(":checked"), 'fast');
+        });
+    </script>
+}

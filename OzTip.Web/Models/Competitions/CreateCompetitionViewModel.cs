@@ -13,6 +13,10 @@ namespace OzTip.Web.Models.Competitions
         [Display(Name = "Name")]
         public string Name { get; set; }
 
+        [StringLength(50)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
         [Display(Name = "Description")]
         public string Description { get; set; }
 

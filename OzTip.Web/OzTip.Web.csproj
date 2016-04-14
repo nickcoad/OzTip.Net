@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Competitions\JoinCompetitionViewModel.cs" />
     <Compile Include="Models\Competitions\InvitePlayersViewModel.cs" />
     <Compile Include="Models\Competitions\CreateCompetitionViewModel.cs" />
     <Compile Include="Models\Invitations\AcceptExistingUserViewModel.cs" />
@@ -437,6 +438,7 @@
     <Content Include="Views\Invitations\accept-new-user.cshtml" />
     <Content Include="Views\Invitations\accept-existing-user.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Competitions\join.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
