@@ -20,7 +20,7 @@ namespace OzTip.Web.Models.Competitions
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        [Display(Name = "Make this competition public?")]
-        public bool IsPublic { get; set; }
+        [Display(Name = "Private competition")]
+        public bool IsPrivate { get; set; }
     }
 }

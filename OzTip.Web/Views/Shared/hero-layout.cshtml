@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+
+<div class="hero-unit row" style="background-image: url(@ViewBag.HeroImageUrl)">
+    <h1>@ViewBag.Title</h1>
+    <p>@ViewBag.SubTitle</p>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <!-- Main view  -->
+    @RenderBody()
+</div>

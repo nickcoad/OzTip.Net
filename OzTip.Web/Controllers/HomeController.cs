@@ -20,6 +20,9 @@ namespace OzTip.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            if (LoggedInUser != null)
+                return RedirectToAction("index", "dashboard");
+
             return View();
         }
 

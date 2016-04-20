@@ -29,7 +29,13 @@
         {
             <a class="btn btn-default" href="@Url.Action("manage-settings", "competitions", new {id = Model.Id})"><span class="fa fa-cog"></span> Manage settings</a>
             <div class="pull-right">
-                <a class="btn btn-danger" href="@Url.Action("delete", "competitions", new {id = Model.Id})"><span class="fa fa-remove"></span> Delete competition</a>
+                <a class="btn btn-danger" href="@Url.Action("delete", "competitions", new {id = Model.Id})"><span class="fa fa-remove"></span> Close competition</a>
+            </div>
+        }
+        else
+        {
+            <div class="pull-right">
+                <a class="btn btn-danger" href="@Url.Action("leave", "competitions", new {id = Model.Id})"><span class="fa fa-sign-out"></span> Leave competition</a>
             </div>
         }
     </div>
@@ -38,6 +44,10 @@ else
 {
     <div class="competition-actions">
         <a class="btn btn-primary" href="@Url.Action("join", "competitions", new {id = Model.Id})"><span class="fa fa-check-square-o"></span> Join competition</a>
+        @if (Model.IsPrivate)
+        {
+            <a class="btn btn-default" href="@Url.Action("request-invite", "competitions", new {id = Model.Id})"><span class="fa fa-send"></span> Request an invite</a>
+        }
     </div>
 }
 

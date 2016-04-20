@@ -26,7 +26,7 @@
 
         @if (Model.Any())
         {
-            <a href="@Url.Action("create", "competitions")" class="btn btn-default"><span class="fa fa-plus-circle"></span> Start a competition</a>
+            <a href="@Url.Action("create", "competitions")" class="btn btn-primary"><span class="fa fa-plus-circle"></span> Start a competition</a>
             <hr />
             <table class="table">
                 <thead>
@@ -44,17 +44,15 @@
                     {
                         <tr>
                             <td>@Html.ActionLink(comp.Name, "details", "competitions", new { id = comp.Id }, null)</td>
-                            <td>@comp.Owner.UserName</td>
+                            <td>@Html.ActionLink(comp.Owner.UserName, "details", "users", new { id = comp.Owner.Id }, null)</td>
                             <td>@comp.Created</td>
                             <td>@comp.Updated</td>
-                            <td><span class="@(comp.IsPublic ? "" : "glyphicon glyphicon-lock")"></span></td>
+                            <td><span class="@(comp.IsPrivate ? "fa fa-lock" : "")"></span></td>
                             <td><a href="@Url.Action("delete", "competitions", new {id = comp.Id})" class="btn btn-danger btn-xs"><span class="fa fa-remove"></span> Delete</a></td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <hr />
-            <a href="@Url.Action("create", "competitions")" class="btn btn-default"><span class="fa fa-plus-circle"></span> Start a competition</a>
         }
         else
         {

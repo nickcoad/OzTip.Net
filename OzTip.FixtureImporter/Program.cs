@@ -95,7 +95,6 @@ namespace OzTip.FixtureImporter
             request.TimeMin = new DateTime(2016, 1, 1, 0, 0, 0);
             request.ShowDeleted = false;
             request.SingleEvents = true;
-            request.MaxResults = 1;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
             // List events.
@@ -153,6 +152,7 @@ namespace OzTip.FixtureImporter
 
                     var gamesRepo = new RepositoryBase<Game>(context);
                     gamesRepo.Create(newGame);
+                    Console.WriteLine("Added game #{0}", newGame.Id);
 
                     var homeScore = new Score
                     {
@@ -171,7 +171,10 @@ namespace OzTip.FixtureImporter
                     var scoresRepo = new RepositoryBase<Score>(context);
 
                     scoresRepo.Create(homeScore);
+                    Console.WriteLine("Added home scores for game #{0}", newGame.Id);
+
                     scoresRepo.Create(awayScore);
+                    Console.WriteLine("Added away scores for game #{0}", newGame.Id);
 
                     newGames.Add(gamesRepo.GetById(newGame.Id));
                 }
@@ -193,9 +196,9 @@ namespace OzTip.FixtureImporter
                 Console.WriteLine("No upcoming events found.");
             }
 
-            var seasonRepo = new RepositoryBase<Season>(new OzTipContext());
+            var seasonRepo = new RepositoryBase<Season>(context);
             var seasons = seasonRepo.Get();
-            var userRepo = new RepositoryBase<User>(new OzTipContext());
+            var userRepo = new RepositoryBase<User>(context);
             var users = userRepo.Get();
             
             foreach (var season in seasons)

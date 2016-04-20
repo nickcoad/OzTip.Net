@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Title))
+{
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>@ViewBag.Title</h2>
+            @RenderSection("headerContent", false)
+            @RenderSection("breadcrumbs", false)
+        </div>
+    </div>
+}
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <!-- Main view  -->
+    @RenderBody()
+</div>

@@ -1,7 +1,7 @@
-﻿@model OzTip.Web.Models.Competitions.JoinCompetitionViewModel
+﻿@model OzTip.Web.Models.Competitions.LeaveCompetitionViewModel
 
 @{ 
-    ViewBag.Title = "Join competition";
+    ViewBag.Title = "Leave competition";
 }
 
 @section breadcrumbs
@@ -17,50 +17,40 @@
             <a href="@Url.Action("details", "competitions", new { id = Model.CompetitionId })">@Model.CompetitionName</a>
         </li>
         <li class="active">
-            <strong>Join competition</strong>
+            <strong>@ViewBag.Title</strong>
         </li>
     </ol>
 }
 
 
-@using (Html.BeginForm("join", "competitions", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("leave", "competitions", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.HiddenFor(m => m.CompetitionId)
     @Html.HiddenFor(m => m.CompetitionName)
-    @Html.HiddenFor(m => m.CompetitionDescription)
-    @Html.HiddenFor(m => m.CompetitionIsPrivate)
-    
+
     <div class="col-xs-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Join competition</h5>
             </div>
             <div class="ibox-content">
-                @if (Model.CompetitionIsPrivate)
-                {
-                    <p>This is a private competition: please request an invite or enter the password to join.</p>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Password, new {@class = "control-label col-sm-3 col-lg-2"})
-                        <div class="col-sm-9 col-lg-10">
-                            @Html.TextBoxFor(m => m.Password, new {@class = "form-control", placeholder = "secret01"})
-                            @Html.ValidationMessageFor(m => m.Password, null, new {@class = "error text-danger"})
+                @Html.ValidationSummary()
+                <p>Are you sure you would like to leave this competition?</p>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.ConfirmIsTicked) @Html.DisplayNameFor(m => m.ConfirmIsTicked)
+                            </label>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <p>Are you sure you'd like to join this competition?</p>
-                }
+                </div>
 
                 <hr/>
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Join now!</button>
-                        @if (Model.CompetitionIsPrivate)
-                        {
-                            <a class="btn btn-block btn-link" href="@Url.Action("request-invite", "competitions", new { id = Model.CompetitionId })">Request an invite</a>
-                        }
+                        <button class="btn btn-primary btn-block" type="submit">Leave competition</button>
                     </div>
                 </div>
             </div>

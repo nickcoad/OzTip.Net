@@ -1,0 +1,28 @@
+﻿@model OzTip.Web.Models.Users.EditUserViewModel
+
+@{
+    ViewBag.Title = "Edit user details";
+    ViewBag.HeroImageUrl = Url.Content("~/Assets/img/users/" + @Model.UserName + "-cover.jpg");
+}
+
+<h1>@ViewBag.Title</h1>
+
+@using (Html.BeginForm("edit", "users", FormMethod.Post, new {@class = "form-horizontal"}))
+{
+    @Html.LabelFor(m => m.GivenName, new { @class = "col-md-3" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.GivenName, new {@class = "form-control"})
+    </div>
+    
+    @Html.LabelFor(m => m.Surname, new { @class = "col-md-3" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.Surname, new {@class = "form-control"})
+    </div>
+
+    @Html.LabelFor(m => m.TeamId, new { @class = "col-md-3" })
+    <div class="col-md-9">
+        @Html.DropDownListFor(m => m.TeamId, Model.Teams.Select(te => new SelectListItem {Text = te.ShortName, Value = te.Id.ToString()}), "No specific team.", new {@class = "form-control"})
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save changes</button>
+}

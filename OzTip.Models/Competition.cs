@@ -16,7 +16,7 @@ namespace OzTip.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Password { get; set; }
-        public bool IsPublic { get; set; }
+        public bool IsPrivate { get; set; }
         #endregion
 
         #region Auditing

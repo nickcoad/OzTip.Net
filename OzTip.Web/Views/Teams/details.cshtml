@@ -1,7 +1,10 @@
 ﻿@model OzTip.Models.Team
 
-@{ 
-    ViewBag.Title = "Team details";
+@{
+    Layout = "~/Views/Shared/hero-layout.cshtml";
+    ViewBag.Title = Model.LongName;
+    ViewBag.SubTitle = "Team details";
+    ViewBag.HeroImageUrl = Url.Content("~/Assets/img/" + @Model.Stub + "-cover.jpg");
 }
 
 <h1>Team details</h1>
@@ -20,8 +23,6 @@
             <td>@Model.Code</td>
             <td>@Model.ShortName</td>
             <td>@Model.LongName</td>
-            <td>@Model.Created</td>
-            <td>@Model.Updated</td>
         </tr>
     </tbody>
 </table>
@@ -45,7 +46,7 @@
                 <tr>
                     <td>@score.Game.Start</td>
                     <td>@(score.IsHome ? score.Game.AwayTeam.ShortName : score.Game.HomeTeam.ShortName)</td>
-                    <td>@score.Game.Venue.LongName</td>
+                    <td>@score.Game.Venue.Name</td>
                     <td>@score.Created</td>
                     <td>@score.Updated</td>
                 </tr>

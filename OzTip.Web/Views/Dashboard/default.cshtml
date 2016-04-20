@@ -1,0 +1,69 @@
+﻿@model OzTip.Web.Models.Dashboard.DefaultDashboardViewModel
+           
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-md-6">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Results: @Model.PreviousRound.Name</h5>
+            </div>
+            <div class="ibox-content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date/time</th>
+                            <th>Home team</th>
+                            <th>Away team</th>
+                            <th>Your tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var game in Model.PreviousRound.Games)
+                        {
+                            <tr>
+                                <td><a href="@Url.Action("details", "games", new { id = game.Id })">@game.Start</a></td>
+                                <td><a href="@Url.Action("details", "teams", new { id = game.HomeTeamId })">@game.HomeTeam.LongName</a></td>
+                                <td><a href="@Url.Action("details", "teams", new { id = game.AwayTeamId })">@game.AwayTeam.LongName</a></td>
+                                <td><a href="@Url.Action("details", "teams", new { id = game.AwayTeamId })">@game.AwayTeam.LongName</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Upcoming: @Model.NextRound.Name</h5>
+            </div>
+            <div class="ibox-content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date/time</th>
+                            <th>Home team</th>
+                            <th>Away team</th>
+                            <th>Venue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var game in Model.NextRound.Games)
+                        {
+                            <tr>
+                                <td>@game.Start</td>
+                                <td>@game.HomeTeam.LongName</td>
+                                <td>@game.AwayTeam.LongName</td>
+                                <td>@game.Venue.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,15 +6,12 @@ using System.Web;
 
 namespace OzTip.Web.Models.Competitions
 {
-    public class JoinCompetitionViewModel
+    public class LeaveCompetitionViewModel
     {
         public int CompetitionId { get; set; }
         public string CompetitionName { get; set; }
-        public string CompetitionDescription { get; set; }
-        public bool CompetitionIsPrivate { get; set; }
 
-        [StringLength(50)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+        [Display(Name = "Remove me from this competition")]
+        public bool ConfirmIsTicked { get; set; }
     }
 }

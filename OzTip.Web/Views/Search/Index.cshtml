@@ -19,12 +19,27 @@
                 </div>
                 <div class="ibox-content">
                     <p>@Model.Competitions.Count competition(s) found:</p>
-                    <ul>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Owner</th>
+                            <th>No. of players</th>
+                            <th>Private?</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach (var competition in Model.Competitions)
                         {
-                            <li>@Html.ActionLink(competition.Name, "details", "competitions", new {id = competition.Id}, null)</li>
+                            <tr>
+                                <td>@Html.ActionLink(competition.Name, "details", "competitions", new {id = competition.Id}, null)</td>
+                                <td>@competition.Owner.UserName</td>
+                                <td>@competition.Users.Count</td>
+                                <td><span class="fa @(competition.IsPrivate ? " fa-lock " : "" )"></span></td>
+                            </tr>
                         }
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>    

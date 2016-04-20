@@ -1,0 +1,11 @@
+﻿@model OzTip.Models.User
+
+@{
+    Layout = "~/Views/Shared/hero-layout.cshtml";
+    ViewBag.Title = string.Join(" ", new string[] { Model.GivenName, Model.Surname });
+    ViewBag.SubTitle = "User profile";
+    ViewBag.HeroImageUrl = Url.Content("~/Assets/img/users/" + @Model.UserName + "-cover.jpg");
+}
+
+<h1>User details</h1>
+<a class="btn btn-primary" href="@Url.Action("edit", "users", new { id = Model.Id })">Edit details</a>

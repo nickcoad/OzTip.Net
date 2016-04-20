@@ -4,6 +4,7 @@ using OzTip.Models;
 using OzTip.Web.Models.Competitions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -73,8 +74,8 @@ namespace OzTip.Web.Controllers
                 Name = viewModel.Name,
                 Description = viewModel.Description,
                 Password = viewModel.Password,
-                IsPublic = viewModel.IsPublic,
-                UserId = 1,
+                IsPrivate = viewModel.IsPrivate,
+                UserId = LoggedInUser.Id,
                 SeasonId = 1,
                 Created = DateTime.UtcNow,
                 Updated = DateTime.UtcNow
@@ -94,12 +95,15 @@ namespace OzTip.Web.Controllers
         public ActionResult Join(int id)
         {
             var competition = _competitionRepository.GetById(id);
+            if (competition == null)
+                return HttpNotFound();
+
             var viewModel = new JoinCompetitionViewModel
             {
                 CompetitionId = competition.Id,
                 CompetitionName = competition.Name,
                 CompetitionDescription = competition.Description,
-                CompetitionIsPublic = competition.IsPublic
+                CompetitionIsPrivate = competition.IsPrivate
             };
             return View(viewModel);
         }
@@ -109,12 +113,65 @@ namespace OzTip.Web.Controllers
         public ActionResult Join(JoinCompetitionViewModel viewModel)
         {
             var competition = _competitionRepository.GetById(viewModel.CompetitionId);
-            viewModel.CompetitionId = competition.Id;
-            viewModel.CompetitionName = competition.Name;
-            viewModel.CompetitionDescription = competition.Description;
-            viewModel.CompetitionIsPublic = competition.IsPublic;
+            if (competition == null)
+                return HttpNotFound();
 
+            viewModel.CompetitionId = competition.Id;
+
+            if (!competition.IsPrivate || competition.Password == viewModel.Password)
+            {
+                competition.Users.Add(LoggedInUser);
+                _competitionRepository.SaveChanges();
+
+                return RedirectToAction("details", "competitions", new { id = viewModel.CompetitionId });
+            }
+                
+
+            ModelState.AddModelError("Password", "The password you have entered is incorrect.");
             return View(viewModel);
+        }
+
+        // GET: competitions/leave/{id}
+        [HttpGet]
+        public ActionResult Leave(int id)
+        {
+            var competition = _competitionRepository.GetById(id);
+            if (competition == null)
+                return HttpNotFound();
+
+            if (competition.Owner.Id == LoggedInUser.Id)
+                ModelState.AddModelError(string.Empty, "You cannot leave a competition you created, you must close the competition or transfer ownership to another player.");
+
+            var viewModel = new LeaveCompetitionViewModel
+            {
+                CompetitionId = competition.Id,
+                CompetitionName = competition.Name,
+                ConfirmIsTicked = false
+            };
+            return View(viewModel);
+        }
+
+        // POST: competitions/leave/{id}
+        [HttpPost]
+        public ActionResult Leave(LeaveCompetitionViewModel viewModel)
+        {
+            var competition = _competitionRepository.GetById(viewModel.CompetitionId);
+            if (competition == null)
+                return HttpNotFound();
+
+            if (!viewModel.ConfirmIsTicked)
+                ModelState.AddModelError("ConfirmIsTicked", "You must confirm your decision to leave the competition.");
+
+            if (competition.Owner.Id == LoggedInUser.Id)
+                ModelState.AddModelError(string.Empty, "You cannot leave a competition you created, you must close the competition or transfer ownership to another player.");
+
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            competition.Users.Remove(LoggedInUser);
+            _competitionRepository.SaveChanges();
+
+            return RedirectToAction("details", "competitions", new { id = viewModel.CompetitionId });
         }
 
         // GET: competitions/manage-settings/{id}

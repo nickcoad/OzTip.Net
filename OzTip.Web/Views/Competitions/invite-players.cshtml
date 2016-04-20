@@ -94,13 +94,16 @@
     });
 
     function addEmailAddress() {
-        emailAddressField.clone().find("input").val("").parents(".email-address-form-group").appendTo($(".email-addresses"));
+        emailAddressField.clone().find("input").val("").parents(".email-address-form-group").appendTo($(".email-addresses")).hide().slideDown('fast');
         updateIdsAndNames();
     }
 
     function removeEmailAddress(elem) {
-        $(elem).parents(".email-address-form-group").remove();
-        updateIdsAndNames();
+        $(elem).parents(".email-address-form-group").slideUp('fast', function() {
+            $(this).remove();
+
+            updateIdsAndNames();
+        });
     }
 
     function updateIdsAndNames() {
