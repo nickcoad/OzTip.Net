@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using OzTip.Web.Utility;
 
 namespace OzTip.Web
 {
@@ -37,10 +38,12 @@ namespace OzTip.Web
 
             // CSS style (bootstrap/inspinia)
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Assets/css/bootstrap.min.css",
+                      "~/Assets/css/bootstrap.css",
                       "~/Assets/css/animate.css",
-                      "~/Assets/css/inspinia.css",
                       "~/Assets/css/style.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/inspinia").Include(
+                      "~/Assets/css/inspinia.css"));
 
             // toastr notification 
             bundles.Add(new ScriptBundle("~/plugins/toastr").Include(
@@ -52,7 +55,7 @@ namespace OzTip.Web
 
             // Font Awesome icons
             bundles.Add(new StyleBundle("~/font-awesome/css").Include(
-                      "~/Assets/fonts/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
+                      "~/Assets/css/font-awesome.min.css", new CssRewriteUrlTransformWithVirtualDirectory()));
         }
     }
 }

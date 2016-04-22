@@ -1,10 +1,17 @@
-﻿@model OzTip.Models.Team
+﻿@using System.Configuration
+@model OzTip.Models.Team
 
 @{
     Layout = "~/Views/Shared/hero-layout.cshtml";
     ViewBag.Title = Model.LongName;
-    ViewBag.SubTitle = "Team details";
-    ViewBag.HeroImageUrl = Url.Content("~/Assets/img/" + @Model.Stub + "-cover.jpg");
+    ViewBag.HeroImageUrl = Url.Content("~/Assets/img/" + @Model.Stub + "-cover.png");
+}
+
+@section CoverContent {
+
+    <h1>@ViewBag.Title</h1>
+    <p>Team details</p>
+
 }
 
 <h1>Team details</h1>

@@ -2,12 +2,16 @@
     Layout = "_Layout.cshtml";
 }
 
-<div class="hero-unit row" style="background-image: url(@ViewBag.HeroImageUrl)">
-    <h1>@ViewBag.Title</h1>
-    <p>@ViewBag.SubTitle</p>
+<div class="cover-section row">
+    <div class="cover-image" style="background-image: url(@ViewBag.HeroImageUrl)"></div>
+    <div class="cover-text">
+        @RenderSection("CoverContent")
+    </div>
 </div>
 
 <div class="wrapper wrapper-content animated fadeInUp">
-    <!-- Main view  -->
+    <!-- Main view -->
     @RenderBody()
 </div>
+
+@RenderSection("scripts", required: false)

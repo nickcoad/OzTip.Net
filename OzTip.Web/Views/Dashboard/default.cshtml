@@ -55,9 +55,9 @@
                         @foreach (var game in Model.NextRound.Games)
                         {
                             <tr>
-                                <td>@game.Start</td>
-                                <td>@game.HomeTeam.LongName</td>
-                                <td>@game.AwayTeam.LongName</td>
+                                <td><a href="@Url.Action("details", "games", new { id = game.Id })">@game.Start</a></td>
+                                <td><a href="@Url.Action("details", "teams", new { id = game.HomeTeamId })">@game.HomeTeam.LongName</a></td>
+                                <td><a href="@Url.Action("details", "teams", new { id = game.AwayTeamId })">@game.AwayTeam.LongName</a></td>
                                 <td>@game.Venue.Name</td>
                             </tr>
                         }

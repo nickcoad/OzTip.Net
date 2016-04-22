@@ -2,9 +2,14 @@
 
 @{
     Layout = "~/Views/Shared/hero-layout.cshtml";
-    ViewBag.Title = string.Join(" ", new string[] { Model.GivenName, Model.Surname });
-    ViewBag.SubTitle = "User profile";
-    ViewBag.HeroImageUrl = Url.Content("~/Assets/img/users/" + @Model.UserName + "-cover.jpg");
+    ViewBag.HeroImageUrl = Url.Content("~/Assets/img/users/" + @Model.UserName + "-cover.png");
+}
+
+@section CoverContent
+{
+    <div class="user-profile-image" style="background-image: url(@Url.Content("~/Assets/img/users/" + @Model.UserName + "-profile.png")); background-size: cover;"></div>
+    <h1>@string.Join(" ", new string[] {Model.GivenName, Model.Surname})</h1>
+    <p>User profile</p>
 }
 
 <h1>User details</h1>
