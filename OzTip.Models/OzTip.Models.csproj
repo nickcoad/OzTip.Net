@@ -74,9 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OzTip.Core\OzTip.Core.csproj">
-      <Project>{c1a8895b-33d5-45b7-885e-c45841250e45}</Project>
-      <Name>OzTip.Core</Name>
+    <ProjectReference Include="..\OzTip.Interfaces\OzTip.Interfaces.csproj">
+      <Project>{9edc5abe-4ee5-4942-98fc-171852bbd3b6}</Project>
+      <Name>OzTip.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

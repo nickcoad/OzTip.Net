@@ -69,9 +69,9 @@
       <Project>{737fe886-7219-4360-8829-9c3c502d0436}</Project>
       <Name>OzTip.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OzTip.Core\OzTip.Core.csproj">
-      <Project>{c1a8895b-33d5-45b7-885e-c45841250e45}</Project>
-      <Name>OzTip.Core</Name>
+    <ProjectReference Include="..\OzTip.Interfaces\OzTip.Interfaces.csproj">
+      <Project>{9edc5abe-4ee5-4942-98fc-171852bbd3b6}</Project>
+      <Name>OzTip.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\OzTip.Models\OzTip.Models.csproj">
       <Project>{bc9615a0-1d3f-4490-841d-163eff24e9da}</Project>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using OzTip.Core.Interfaces;
+using OzTip.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;

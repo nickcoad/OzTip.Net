@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OzTip.Core.Interfaces
+namespace OzTip.Interfaces
 {
     public interface IHasTimeStamps
     {

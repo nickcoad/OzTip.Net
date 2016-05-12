@@ -1,4 +1,4 @@
-﻿using OzTip.Core.Interfaces;
+﻿using OzTip.Interfaces;
 using OzTip.Data;
 using OzTip.Models;
 using System;
@@ -23,6 +23,7 @@ namespace OzTip.Web.Controllers
         }
 
         // GET: competitions/details/{id}
+        [AllowAnonymous]
         public ActionResult Details(int id)
         {
             var team = _teamRepository.GetById(id);

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Web.Mvc;
-using OzTip.Core.Interfaces;
+using OzTip.Interfaces;
 using OzTip.Data;
 using OzTip.Models;
 

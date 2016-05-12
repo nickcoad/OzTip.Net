@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using OzTip.Core.Interfaces;
+using OzTip.Interfaces;
 using OzTip.Models;
 using OzTip.Web.Models.Invitations;
 

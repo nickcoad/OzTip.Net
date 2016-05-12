@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
-using OzTip.Core.Interfaces;
+using OzTip.Interfaces;
 
 namespace OzTip.Data
 {

@@ -1,4 +1,4 @@
-﻿using OzTip.Core.Interfaces;
+﻿using OzTip.Interfaces;
 using OzTip.Data;
 using OzTip.Models;
 using OzTip.Web.Models.Competitions;

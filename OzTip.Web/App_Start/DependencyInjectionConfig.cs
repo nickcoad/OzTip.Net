@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using OzTip.Core.Interfaces;
+using OzTip.Interfaces;
 using OzTip.Data;
 using OzTip.Models;
 using SimpleInjector;

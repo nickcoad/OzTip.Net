@@ -188,7 +188,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competitions\JoinCompetitionViewModel.cs" />
     <Compile Include="Models\Competitions\InvitePlayersViewModel.cs" />
@@ -451,6 +451,10 @@
     <ProjectReference Include="..\OzTip.Data\OzTip.Data.csproj">
       <Project>{8d066c8b-7880-4959-b72f-1a6f939c7bd6}</Project>
       <Name>OzTip.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OzTip.Interfaces\OzTip.Interfaces.csproj">
+      <Project>{9edc5abe-4ee5-4942-98fc-171852bbd3b6}</Project>
+      <Name>OzTip.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\OzTip.Models\OzTip.Models.csproj">
       <Project>{bc9615a0-1d3f-4490-841d-163eff24e9da}</Project>

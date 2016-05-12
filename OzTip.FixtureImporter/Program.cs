@@ -13,7 +13,6 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
-using OzTip.Core.Interfaces;
 using OzTip.Data;
 using OzTip.FixtureImporter.Seeders;
 using OzTip.Models;
